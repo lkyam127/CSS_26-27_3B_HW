@@ -55,7 +55,7 @@
         </button>
     </header>
 
-    <!-- Main Content Layout (items-start + h-fit 對齊左側) -->
+    <!-- Main Content Layout -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         <!-- Left 1/3: Calendar Card -->
@@ -154,8 +154,8 @@
         const GITHUB_REPO = "CSS_26-27_3B_HW_Photos";
         const RAW_BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/images`;
         
-        // 請將下方網址替換為你在 Cloudflare 產生的 Worker URL
-        const WORKER_URL = "https://YOUR_WORKER_SUBDOMAIN.workers.dev";
+        // 已填入你的 Cloudflare Worker 網址
+        const WORKER_URL = "https://hw-uploader.lkyam127.workers.dev";
 
         let today = new Date();
         let currentYear = today.getFullYear();
