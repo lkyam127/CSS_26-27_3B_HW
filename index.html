@@ -28,12 +28,12 @@
 
     <style>
         /* -------------------------------------
-           8 種主題色 (含微調動態全域背景 --bg-main)
+           8 種主題色 (全面修正淺色/深色專屬背景)
            ------------------------------------- */
         /* 1. Blue */
         [data-theme="blue"] {
-            --bg-main: #f3f6fc;
-            --text-main: #1f2937;
+            --bg-main: #f1f5f9;
+            --text-main: #1e293b;
             --theme-color: #2563eb;
             --theme-text: #2563eb;
             --theme-glow: rgba(37, 99, 235, 0.25);
@@ -49,15 +49,15 @@
 
         /* 2. Emerald */
         [data-theme="emerald"] {
-            --bg-main: #f2f8f5;
-            --text-main: #1f2937;
+            --bg-main: #f0fdf4;
+            --text-main: #14532d;
             --theme-color: #059669;
             --theme-text: #059669;
             --theme-glow: rgba(5, 150, 105, 0.25);
         }
         @media (prefers-color-scheme: dark) {
             [data-theme="emerald"] {
-                --bg-main: #0a1c17;
+                --bg-main: #061811;
                 --text-main: #f8fafc;
                 --theme-text: #34d399;
                 --theme-glow: rgba(52, 211, 153, 0.12);
@@ -66,8 +66,8 @@
 
         /* 3. Purple */
         [data-theme="purple"] {
-            --bg-main: #f6f3fc;
-            --text-main: #1f2937;
+            --bg-main: #faf5ff;
+            --text-main: #3b0764;
             --theme-color: #7c3aed;
             --theme-text: #7c3aed;
             --theme-glow: rgba(124, 58, 237, 0.25);
@@ -83,8 +83,8 @@
 
         /* 4. Amber */
         [data-theme="amber"] {
-            --bg-main: #faf6ef;
-            --text-main: #1f2937;
+            --bg-main: #fffbeb;
+            --text-main: #451a03;
             --theme-color: #d97706;
             --theme-text: #d97706;
             --theme-glow: rgba(217, 119, 6, 0.25);
@@ -100,8 +100,8 @@
 
         /* 5. Rose */
         [data-theme="rose"] {
-            --bg-main: #fdf2f4;
-            --text-main: #1f2937;
+            --bg-main: #fff1f2;
+            --text-main: #4c0519;
             --theme-color: #e11d48;
             --theme-text: #e11d48;
             --theme-glow: rgba(225, 29, 72, 0.25);
@@ -117,8 +117,8 @@
 
         /* 6. Cyan */
         [data-theme="cyan"] {
-            --bg-main: #f0f9fa;
-            --text-main: #1f2937;
+            --bg-main: #ecfeff;
+            --text-main: #164e63;
             --theme-color: #0891b2;
             --theme-text: #0891b2;
             --theme-glow: rgba(8, 145, 178, 0.25);
@@ -134,8 +134,8 @@
 
         /* 7. Indigo */
         [data-theme="indigo"] {
-            --bg-main: #f4f4fc;
-            --text-main: #1f2937;
+            --bg-main: #eef2ff;
+            --text-main: #1e1b4b;
             --theme-color: #4f46e5;
             --theme-text: #4f46e5;
             --theme-glow: rgba(79, 70, 229, 0.25);
@@ -149,20 +149,20 @@
             }
         }
 
-        /* 8. Slate */
+        /* 8. Slate (徹底去除藍調，改為極精緻的中性碳灰) */
         [data-theme="slate"] {
-            --bg-main: #f4f5f7;
-            --text-main: #1f2937;
-            --theme-color: #475569;
-            --theme-text: #475569;
-            --theme-glow: rgba(71, 85, 105, 0.25);
+            --bg-main: #f3f4f6;
+            --text-main: #111827;
+            --theme-color: #4b5563;
+            --theme-text: #4b5563;
+            --theme-glow: rgba(75, 85, 99, 0.25);
         }
         @media (prefers-color-scheme: dark) {
             [data-theme="slate"] {
-                --bg-main: #0f172a;
-                --text-main: #f8fafc;
-                --theme-text: #94a3b8;
-                --theme-glow: rgba(148, 163, 184, 0.12);
+                --bg-main: #121417; /* 純炭黑灰色，絕無藍光 */
+                --text-main: #f9fafb;
+                --theme-text: #9ca3af;
+                --theme-glow: rgba(156, 163, 175, 0.12);
             }
         }
 
@@ -181,13 +181,13 @@
 
         /* Liquid Glass 卡片 */
         .liquid-glass {
-            background: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(24px) saturate(190%);
             -webkit-backdrop-filter: blur(24px) saturate(190%);
-            border: 1.5px solid rgba(255, 255, 255, 0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.8);
             box-shadow: 
-                0 0 20px 0 rgba(255, 255, 255, 0.5) inset,
-                0 10px 30px -5px rgba(0, 0, 0, 0.06);
+                0 0 20px 0 rgba(255, 255, 255, 0.6) inset,
+                0 10px 30px -5px rgba(0, 0, 0, 0.05);
         }
 
         @media (prefers-color-scheme: dark) {
@@ -204,19 +204,19 @@
 
         /* Liquid Glass 按鈕 */
         .glass-btn {
-            background: rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1.5px solid rgba(255, 255, 255, 0.8);
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
             box-shadow: 
-                0 0 10px 0 rgba(255, 255, 255, 0.6) inset,
-                0 4px 15px rgba(0, 0, 0, 0.05);
+                0 0 10px 0 rgba(255, 255, 255, 0.7) inset,
+                0 4px 15px rgba(0, 0, 0, 0.04);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .glass-btn:hover {
             box-shadow: 
-                0 0 15px 0 rgba(255, 255, 255, 0.9) inset,
+                0 0 15px 0 rgba(255, 255, 255, 0.95) inset,
                 0 0 20px var(--theme-glow);
             transform: scale(1.02);
         }
@@ -240,11 +240,11 @@
         .glass-menu-liquid {
             backdrop-filter: blur(20px) saturate(230%) contrast(108%);
             -webkit-backdrop-filter: blur(20px) saturate(230%) contrast(108%);
-            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.75), rgba(240, 240, 250, 0.55));
-            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.85), rgba(245, 245, 250, 0.65));
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
             box-shadow: 
-                0 0 25px 0 rgba(255, 255, 255, 0.7) inset,
-                0 20px 40px rgba(0, 0, 0, 0.12);
+                0 0 25px 0 rgba(255, 255, 255, 0.8) inset,
+                0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             position: relative;
         }
@@ -263,7 +263,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.4), transparent 70%);
+            background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.5), transparent 70%);
             pointer-events: none;
         }
 
