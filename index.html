@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日紀錄</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --theme-blue: #0A6DFF; --bg-gray: #f4f5f7; }
+        body { background-color: var(--bg-gray); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .theme-header { background-color: var(--theme-blue); }
+        .month-btn.active { background-color: var(--theme-blue); color: white; font-weight: bold; }
+        .day-btn.active { background-color: var(--theme-blue); color: white; font-weight: bold; border-color: var(--theme-blue); }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- 頂部標題列 -->
+    <header class="theme-header text-white text-center py-3 shadow-md sticky top-0 z-50">
+        <h1 class="text-lg md:text-xl font-bold tracking-wide">每日紀錄</h1>
+    </header>
+
+    <!-- 主要內容區：iPad 橫向為左右分欄 (左1/3 + 右2/3) -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- 左側 1/3 (lg:col-span-4)：四邊形日曆選擇器卡片 -->
+        <section class="lg:col-span-4 bg-white rounded-2xl shadow-sm border border-gray-200 p-5 flex flex-col justify-between h-fit">
+            <div>
+                <h2 class="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wider">選擇月份</h2>
+                <!-- 月份切換 (橫向滑動) -->
+                <div id="month-selector" class="flex overflow-x-auto space-x-2 pb-3 mb-4 border-b border-gray-100 hide-scroll">
+                    <!-- JS 動態生成 -->
+                </div>
+
+                <h2 class="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wider">選擇日期</h2>
+                <!-- 日期選擇 (7欄月曆網格，呈現四邊形) -->
+                <div id="day-selector" class="grid grid-cols-7 gap-2">
+                    <!-- JS 動態生成 -->
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 text-xs text-gray-400 text-center">
+                當前選擇：<span id="selected-date-label" class="font-bold text-gray-700"></span>
+            </div>
+        </section>
+
+        <!-- 右側 2/3 (lg:col-span-8)：文字紀錄與圖片展現 -->
+        <section class="lg:col-span-8 bg-white rounded-2xl shadow-sm border border-gray-200 p-6 min-h-[450px] flex flex-col">
+            
+            <!-- 狀態：載入中 -->
+            <div id="loading-state" class="flex-1 flex flex-col items-center justify-center py-12">
+                <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                <p class="text-gray-400 text-sm mt-3">載入資料中...</p>
+            </div>
+
+            <!-- 狀態：當天無紀錄 -->
+            <div id="empty-state" class="hidden flex-1 flex flex-col items-center justify-center py-12 text-gray-400">
+                <svg class="w-16 h-16 mb-2 stroke-current opacity-40" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <p class="text-base font-medium">該日期無紀錄</p>
+            </div>
+
+            <!-- 狀態：顯示內容 (右側 2/3 內部再劃分：左 2/3 文字 + 右 1/3 圖片) -->
+            <div id="content-state" class="hidden flex-1 grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                
+                <!-- 左側 2/3：文字內容區 -->
+                <div class="md:col-span-2 space-y-4">
+                    <h3 class="text-base font-bold text-blue-600 border-b pb-2 border-gray-100 flex items-center gap-2">
+                        <span>📝</span> 文字紀錄
+                    </h3>
+                    <div id="text-container" class="text-gray-700 text-sm leading-relaxed whitespace-pre-line bg-gray-50 p-4 rounded-xl border border-gray-100 min-h-[200px]">
+                        <!-- 動態載入 .txt 內容 -->
+                    </div>
+                </div>
+
+                <!-- 右側 1/3：圖片展示區 -->
+                <div class="md:col-span-1 space-y-4">
+                    <h3 class="text-base font-bold text-blue-600 border-b pb-2 border-gray-100 flex items-center gap-2">
+                        <span>🖼️</span> 附圖
+                    </h3>
+                    <div id="image-container" class="rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-gray-50 flex items-center justify-center">
+                        <img id="daily-photo" src="" alt="當日圖片" class="w-full h-auto object-cover max-h-[350px] cursor-pointer" onclick="window.open(this.src, '_blank')">
+                    </div>
+                    <p id="no-img-label" class="text-xs text-gray-400 text-center hidden">今日無附圖</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // === 自動根據你的 GitHub Repo 設定 ===
+        const GITHUB_USERNAME = "lkyam127";
+        const GITHUB_REPO = "CSS_26-27_3B_HW_Photos";
+        
+        const RAW_BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/images`;
+
+        // 預設日期設定
+        let selectedMonth = new Date().getMonth() + 1;
+        let selectedDay = new Date().getDate();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMonthSelector();
+            renderDaySelector(selectedMonth);
+            updateContent();
+        });
+
+        // 渲染 9月 - 8月 學年制月份
+        function renderMonthSelector() {
+            const months = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8];
+            const container = document.getElementById('month-selector');
+            container.innerHTML = '';
+            
+            months.forEach(m => {
+                const btn = document.createElement('button');
+                btn.className = `month-btn px-3 py-1.5 text-xs font-medium rounded-lg text-gray-600 bg-gray-100 hover:bg-gray-200 transition shrink-0 ${m === selectedMonth ? 'active' : ''}`;
+                btn.innerText = `${m}月`;
+                btn.onclick = () => {
+                    selectedMonth = m;
+                    renderMonthSelector();
+                    renderDaySelector(m);
+                    updateContent();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // 渲染 1~31 號月曆網格
+        function renderDaySelector(month) {
+            const container = document.getElementById('day-selector');
+            container.innerHTML = '';
+            
+            const currentYear = new Date().getFullYear();
+            const daysInMonth = new Date(currentYear, month, 0).getDate();
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const btn = document.createElement('button');
+                btn.className = `day-btn aspect-square flex items-center justify-center text-xs rounded-lg border border-gray-200 text-gray-700 hover:bg-blue-50 transition ${d === selectedDay ? 'active' : ''}`;
+                btn.innerText = d;
+                btn.onclick = () => {
+                    selectedDay = d;
+                    renderDaySelector(month);
+                    updateContent();
+                };
+                container.appendChild(btn);
+            }
+        }
+
+        // 讀取當天文字 (.txt) 與 圖片 (.jpg)
+        async function updateContent() {
+            const loading = document.getElementById('loading-state');
+            const empty = document.getElementById('empty-state');
+            const content = document.getElementById('content-state');
+            const textContainer = document.getElementById('text-container');
+            const img = document.getElementById('daily-photo');
+            const noImgLabel = document.getElementById('no-img-label');
+            const imgContainer = document.getElementById('image-container');
+
+            const year = new Date().getFullYear();
+            const monthStr = selectedMonth.toString().padStart(2, '0');
+            const dayStr = selectedDay.toString().padStart(2, '0');
+            const dateKey = `${year}-${monthStr}-${dayStr}`;
+
+            document.getElementById('selected-date-label').innerText = `${year}年 ${monthStr}月 ${dayStr}日`;
+
+            loading.classList.remove('hidden');
+            empty.classList.add('hidden');
+            content.classList.add('hidden');
+
+            const txtUrl = `${RAW_BASE_URL}/${dateKey}.txt`;
+            const imgUrl = `${RAW_BASE_URL}/${dateKey}.jpg`;
+
+            let hasText = false;
+            let hasImg = false;
+
+            // 1. 抓取文字檔
+            try {
+                const res = await fetch(txtUrl);
+                if (res.ok) {
+                    const text = await res.text();
+                    textContainer.innerText = text;
+                    hasText = true;
+                }
+            } catch (e) { hasText = false; }
+
+            // 2. 抓取圖片檔
+            img.src = imgUrl;
+            await new Promise((resolve) => {
+                img.onload = () => { hasImg = true; resolve(); };
+                img.onerror = () => { hasImg = false; resolve(); };
+            });
+
+            loading.classList.add('hidden');
+
+            if (!hasText && !hasImg) {
+                empty.classList.remove('hidden');
+            } else {
+                content.classList.remove('hidden');
+                
+                // 文字處置
+                if (!hasText) {
+                    textContainer.innerText = "（當天未上傳文字紀錄）";
+                }
+
+                // 圖片處置
+                if (hasImg) {
+                    imgContainer.classList.remove('hidden');
+                    noImgLabel.classList.add('hidden');
+                } else {
+                    imgContainer.classList.add('hidden');
+                    noImgLabel.classList.remove('hidden');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
