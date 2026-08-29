@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Homework</title>
     
-    <!-- Safari / iOS 頂欄顏色適配標籤 -->
-    <meta id="meta-theme-color" name="theme-color" content="#2563eb">
+    <!-- 初始化 Safari 頂欄顏色標籤 -->
+    <meta name="theme-color" content="#2563eb">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -19,7 +19,6 @@
             --text-main: #1f2937;
             --border-color: #e5e7eb;
 
-            /* 預設藍色 */
             --theme-color: #2563eb;
             --theme-text: #2563eb;
         }
@@ -35,36 +34,28 @@
             }
         }
 
-        /* --- 8 種主題色定義 (確保 Header 與 Meta 色值一致，文字在深色模式下稍微提亮) --- */
-        /* 1. Blue */
+        /* 8 種主題色 */
         [data-theme="blue"] { --theme-color: #2563eb; --theme-text: #2563eb; }
         @media (prefers-color-scheme: dark) { [data-theme="blue"] { --theme-text: #60a5fa; } }
 
-        /* 2. Emerald */
         [data-theme="emerald"] { --theme-color: #059669; --theme-text: #059669; }
         @media (prefers-color-scheme: dark) { [data-theme="emerald"] { --theme-text: #34d399; } }
 
-        /* 3. Purple */
         [data-theme="purple"] { --theme-color: #7c3aed; --theme-text: #7c3aed; }
         @media (prefers-color-scheme: dark) { [data-theme="purple"] { --theme-text: #a78bfa; } }
 
-        /* 4. Amber */
         [data-theme="amber"] { --theme-color: #d97706; --theme-text: #d97706; }
         @media (prefers-color-scheme: dark) { [data-theme="amber"] { --theme-text: #fbbf24; } }
 
-        /* 5. Rose */
         [data-theme="rose"] { --theme-color: #e11d48; --theme-text: #e11d48; }
         @media (prefers-color-scheme: dark) { [data-theme="rose"] { --theme-text: #fb7185; } }
 
-        /* 6. Cyan */
         [data-theme="cyan"] { --theme-color: #0891b2; --theme-text: #0891b2; }
         @media (prefers-color-scheme: dark) { [data-theme="cyan"] { --theme-text: #22d3ee; } }
 
-        /* 7. Indigo */
         [data-theme="indigo"] { --theme-color: #4f46e5; --theme-text: #4f46e5; }
         @media (prefers-color-scheme: dark) { [data-theme="indigo"] { --theme-text: #818cf8; } }
 
-        /* 8. Slate */
         [data-theme="slate"] { --theme-color: #475569; --theme-text: #475569; }
         @media (prefers-color-scheme: dark) { [data-theme="slate"] { --theme-text: #94a3b8; } }
 
@@ -102,13 +93,12 @@
         <!-- 右上角整合選單 -->
         <div class="relative">
             <button id="theme-menu-btn" onclick="toggleThemeMenu(event)" class="p-2 rounded-full hover:bg-black/20 active:scale-95 transition flex items-center justify-center cursor-pointer" title="Change Theme">
-                <!-- Palette Icon -->
                 <svg class="w-6 h-6 stroke-current fill-none" viewBox="0 0 24 24" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4 5 5 0 013-4.586V12a7 7 0 0114 0v.414A5 5 0 0121 17a4 4 0 01-4 4h-1a2 2 0 01-2-2 1 1 0 00-1-1 1 1 0 00-1 1 2 2 0 01-2 2H7z" />
                 </svg>
             </button>
 
-            <!-- 下拉主題選單 (8種顏色雙欄佈局) -->
+            <!-- 下拉主題選單 -->
             <div id="theme-menu" class="hidden absolute right-0 mt-2 w-52 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-700 p-2 z-50 transition-all">
                 <div class="text-xs font-semibold text-gray-400 dark:text-slate-400 px-3 py-1.5 mb-1 border-b border-gray-100 dark:border-slate-700">Select Theme</div>
                 
@@ -210,7 +200,6 @@
         const RAW_BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/images`;
         const API_CONTENTS_URL = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/images`;
 
-        // 8種主題色彩與 Safari / iOS 頂欄 100% 同步
         const themeColors = {
             blue: "#2563eb",
             emerald: "#059669",
@@ -234,7 +223,6 @@
 
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        // --- 選單切換與點擊外部關閉 ---
         function toggleThemeMenu(e) {
             e.stopPropagation();
             const menu = document.getElementById('theme-menu');
@@ -248,17 +236,21 @@
             }
         });
 
-        // --- 主題切換與 Safari 頂欄強效同步 ---
+        // 強制重構 <meta name="theme-color"> 標籤以破解 Safari / iPadOS 顏色卡住的問題
         function setTheme(themeName) {
             document.documentElement.setAttribute('data-theme', themeName);
             localStorage.setItem('user-theme', themeName);
             
-            // 更新 Meta 標籤以適配 Safari / iPadOS 頂欄
             const hexColor = themeColors[themeName] || themeColors.blue;
-            const metaTheme = document.getElementById('meta-theme-color');
-            if (metaTheme) {
-                metaTheme.setAttribute('content', hexColor);
-            }
+            
+            // 1. 移除所有舊的 theme-color meta 標籤
+            document.querySelectorAll('meta[name="theme-color"]').forEach(el => el.remove());
+
+            // 2. 重新創建並插入新標籤，誘發 Safari 重新渲染頂欄顏色
+            const meta = document.createElement('meta');
+            meta.name = 'theme-color';
+            meta.content = hexColor;
+            document.head.appendChild(meta);
             
             const menu = document.getElementById('theme-menu');
             if (menu) menu.classList.add('hidden');
@@ -411,6 +403,7 @@
                     imgContainer.classList.remove('hidden');
                     noImgLabel.classList.add('hidden');
                 } else {
+                    imgContainer.classList.hidden = true;
                     imgContainer.classList.add('hidden');
                     noImgLabel.classList.remove('hidden');
                 }
