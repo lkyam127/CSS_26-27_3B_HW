@@ -75,13 +75,13 @@
         <!-- Right 2/3: Content Card -->
         <section id="right-content-card" class="lg:col-span-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col transition-colors justify-center">
             
-            <!-- Loading State (Centered) -->
+            <!-- Loading State -->
             <div id="loading-state" class="flex-1 min-h-[300px] flex flex-col items-center justify-center">
                 <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                 <p class="text-gray-400 text-sm mt-3">Loading data...</p>
             </div>
 
-            <!-- Empty State (Centered) -->
+            <!-- Empty State -->
             <div id="empty-state" class="hidden flex-1 min-h-[300px] flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
                 <svg class="w-14 h-14 mb-2 stroke-current opacity-40" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                 <p class="text-base font-medium">No record for this date</p>
@@ -217,36 +217,30 @@
             empty.classList.add('hidden');
             content.classList.add('hidden');
 
-            const txtUrl = `${RAW_BASE_URL}/${dateKey}.txt?t=${Date.now()}`;
-            let hasText = false;
-            let imgUrl = '';
+            const txtUrl = `${RAW_BASE_URL}/${dateKey}.txt`;
 
-            try {
-                const res = await fetch(txtUrl);
-                if (res.ok) {
-                    textContainer.innerText = await res.text();
-                    textContainer.className = "flex-1 text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-100 dark:border-slate-700 text-gray-700 dark:text-slate-200 block text-left";
-                    hasText = true;
-                }
-            } catch (e) { hasText = false; }
-
-            const extensions = ['jpg', 'jpeg', 'png'];
-            for (let ext of extensions) {
-                const testUrl = `${RAW_BASE_URL}/${dateKey}.${ext}?t=${Date.now()}`;
-                if (await checkImageExists(testUrl)) { imgUrl = testUrl; break; }
-            }
+            // 同時（平行）測試文字與三種圖片格式，大幅提升讀取速度
+            const [textResult, imgUrl] = await Promise.all([
+                fetchText(txtUrl),
+                findValidImage(dateKey)
+            ]);
 
             loading.classList.add('hidden');
-            const hasImg = imgUrl !== '';
+            const hasText = textResult !== null;
+            const hasImg = imgUrl !== null;
 
             if (!hasText && !hasImg) {
                 empty.classList.remove('hidden');
             } else {
                 content.classList.remove('hidden');
-                if (!hasText) {
+                if (hasText) {
+                    textContainer.innerText = textResult;
+                    textContainer.className = "flex-1 text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-100 dark:border-slate-700 text-gray-700 dark:text-slate-200 block text-left";
+                } else {
                     textContainer.innerText = "(No text record for this date)";
                     textContainer.className = "flex-1 text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-100 dark:border-slate-700 flex items-center justify-center text-gray-400 dark:text-gray-500 text-center";
                 }
+
                 if (hasImg) {
                     img.src = imgUrl;
                     imgContainer.classList.remove('hidden');
@@ -257,6 +251,25 @@
                 }
             }
             setTimeout(syncHeight, 50);
+        }
+
+        async function fetchText(url) {
+            try {
+                const res = await fetch(url);
+                if (res.ok) return await res.text();
+            } catch (e) {}
+            return null;
+        }
+
+        async function findValidImage(dateKey) {
+            const extensions = ['jpg', 'png', 'jpeg'];
+            const promises = extensions.map(ext => {
+                const testUrl = `${RAW_BASE_URL}/${dateKey}.${ext}`;
+                return checkImageExists(testUrl).then(exists => exists ? testUrl : null);
+            });
+
+            const results = await Promise.all(promises);
+            return results.find(url => url !== null) || null;
         }
 
         function checkImageExists(url) {
