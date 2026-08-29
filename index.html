@@ -53,11 +53,11 @@
         <div class="w-10"></div>
     </header>
 
-    <!-- Main Content Layout -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Main Content Layout (items-stretch 確保兩邊等高) -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         
         <!-- Left 1/3: Calendar Card -->
-        <section id="left-calendar-card" class="lg:col-span-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col justify-between h-fit transition-colors">
+        <section id="left-calendar-card" class="lg:col-span-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col justify-between h-full transition-colors">
             <div>
                 <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-100 dark:border-slate-700">
                     <button onclick="changeMonth(-1)" class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition font-bold">&lt;</button>
@@ -73,16 +73,16 @@
         </section>
 
         <!-- Right 2/3: Content Card -->
-        <section id="right-content-card" class="lg:col-span-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col transition-colors justify-center items-center">
+        <section id="right-content-card" class="lg:col-span-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col transition-colors justify-center items-center h-full">
             
-            <!-- Loading State (Perfectly Centered) -->
-            <div id="loading-state" class="w-full h-full min-h-[350px] flex flex-col items-center justify-center">
+            <!-- Loading State -->
+            <div id="loading-state" class="w-full h-full flex-1 flex flex-col items-center justify-center py-12">
                 <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                 <p class="text-gray-400 text-sm mt-3">Loading data...</p>
             </div>
 
-            <!-- Empty State (Perfectly Centered) -->
-            <div id="empty-state" class="hidden w-full h-full min-h-[350px] flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden w-full h-full flex-1 flex flex-col items-center justify-center py-12 text-gray-400 dark:text-gray-500">
                 <svg class="w-14 h-14 mb-2 stroke-current opacity-40" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                 <p class="text-base font-medium">No record for this date</p>
             </div>
@@ -134,22 +134,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             updateContent();
-            syncHeight();
-            window.addEventListener('resize', syncHeight);
         });
-
-        function syncHeight() {
-            if (window.innerWidth >= 1024) {
-                const leftCard = document.getElementById('left-calendar-card');
-                const rightCard = document.getElementById('right-content-card');
-                if (leftCard && rightCard) {
-                    rightCard.style.minHeight = `${leftCard.offsetHeight}px`;
-                }
-            } else {
-                const rightCard = document.getElementById('right-content-card');
-                if (rightCard) rightCard.style.minHeight = 'auto';
-            }
-        }
 
         function changeMonth(direction) {
             currentMonth += direction;
@@ -163,7 +148,6 @@
 
             renderCalendar();
             updateContent();
-            setTimeout(syncHeight, 50);
         }
 
         function renderCalendar() {
@@ -267,7 +251,6 @@
                     noImgLabel.classList.remove('hidden');
                 }
             }
-            setTimeout(syncHeight, 50);
         }
 
         async function fetchText(url) {
