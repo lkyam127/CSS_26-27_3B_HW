@@ -22,7 +22,7 @@
                 const computedBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-main').trim();
                 const meta = document.createElement('meta');
                 meta.name = 'theme-color';
-                meta.content = computedBg || '#0b1329';
+                meta.content = computedBg || '#f1f5f9';
                 document.getElementsByTagName('head')[0].appendChild(meta);
             });
         })();
@@ -37,35 +37,27 @@
         /* -------------------------------------
            8 種主題色 (支援 .dark class 模式)
            ------------------------------------- */
-        /* 1. Blue */
         [data-theme="blue"] { --bg-main: #f1f5f9; --text-main: #1e293b; --theme-color: #2563eb; --theme-text: #2563eb; --theme-glow: rgba(37, 99, 235, 0.25); }
         .dark [data-theme="blue"] { --bg-main: #0b1329; --text-main: #f8fafc; --theme-text: #60a5fa; --theme-glow: rgba(96, 165, 250, 0.12); }
 
-        /* 2. Emerald */
         [data-theme="emerald"] { --bg-main: #f0fdf4; --text-main: #14532d; --theme-color: #059669; --theme-text: #059669; --theme-glow: rgba(5, 150, 105, 0.25); }
         .dark [data-theme="emerald"] { --bg-main: #061811; --text-main: #f8fafc; --theme-text: #34d399; --theme-glow: rgba(52, 211, 153, 0.12); }
 
-        /* 3. Purple */
         [data-theme="purple"] { --bg-main: #faf5ff; --text-main: #3b0764; --theme-color: #7c3aed; --theme-text: #7c3aed; --theme-glow: rgba(124, 58, 237, 0.25); }
         .dark [data-theme="purple"] { --bg-main: #120d24; --text-main: #f8fafc; --theme-text: #a78bfa; --theme-glow: rgba(167, 139, 250, 0.12); }
 
-        /* 4. Amber */
         [data-theme="amber"] { --bg-main: #fffbeb; --text-main: #451a03; --theme-color: #d97706; --theme-text: #d97706; --theme-glow: rgba(217, 119, 6, 0.25); }
         .dark [data-theme="amber"] { --bg-main: #1a1409; --text-main: #f8fafc; --theme-text: #fbbf24; --theme-glow: rgba(251, 191, 36, 0.12); }
 
-        /* 5. Sky Blue */
         [data-theme="sky"] { --bg-main: #f0f9ff; --text-main: #0c4a6e; --theme-color: #0284c7; --theme-text: #0284c7; --theme-glow: rgba(2, 132, 199, 0.25); }
         .dark [data-theme="sky"] { --bg-main: #081a26; --text-main: #f8fafc; --theme-text: #38bdf8; --theme-glow: rgba(56, 189, 248, 0.12); }
 
-        /* 6. Cyan */
         [data-theme="cyan"] { --bg-main: #ecfeff; --text-main: #164e63; --theme-color: #0891b2; --theme-text: #0891b2; --theme-glow: rgba(8, 145, 178, 0.25); }
         .dark [data-theme="cyan"] { --bg-main: #071921; --text-main: #f8fafc; --theme-text: #22d3ee; --theme-glow: rgba(34, 211, 238, 0.12); }
 
-        /* 7. Indigo */
         [data-theme="indigo"] { --bg-main: #eef2ff; --text-main: #1e1b4b; --theme-color: #4f46e5; --theme-text: #4f46e5; --theme-glow: rgba(79, 70, 229, 0.25); }
         .dark [data-theme="indigo"] { --bg-main: #0d0f28; --text-main: #f8fafc; --theme-text: #818cf8; --theme-glow: rgba(129, 140, 248, 0.12); }
 
-        /* 8. Slate */
         [data-theme="slate"] { --bg-main: #f3f4f6; --text-main: #111827; --theme-color: #4b5563; --theme-text: #4b5563; --theme-glow: rgba(75, 85, 99, 0.25); }
         .dark [data-theme="slate"] { --bg-main: #121417; --text-main: #f9fafb; --theme-text: #9ca3af; --theme-glow: rgba(156, 163, 175, 0.12); }
 
@@ -82,14 +74,14 @@
             transition: background-color 0.3s ease;
         }
 
-        /* 淺色模式卡片玻璃質感 */
+        /* 淺色與深色卡片玻璃質感 */
         .liquid-glass {
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.65);
             backdrop-filter: blur(24px) saturate(190%);
             -webkit-backdrop-filter: blur(24px) saturate(190%);
-            border: 1.5px solid rgba(255, 255, 255, 0.9);
+            border: 1.5px solid rgba(255, 255, 255, 0.8);
             box-shadow: 
-                0 0 20px 0 rgba(255, 255, 255, 0.6) inset,
+                0 0 20px 0 rgba(255, 255, 255, 0.5) inset,
                 0 10px 30px -5px rgba(0, 0, 0, 0.05);
         }
 
@@ -102,19 +94,19 @@
         }
 
         .glass-btn {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1.5px solid rgba(0, 0, 0, 0.08);
             box-shadow: 
-                0 0 10px 0 rgba(255, 255, 255, 0.7) inset,
+                0 0 10px 0 rgba(255, 255, 255, 0.6) inset,
                 0 4px 15px rgba(0, 0, 0, 0.04);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .glass-btn:hover {
             box-shadow: 
-                0 0 15px 0 rgba(255, 255, 255, 0.95) inset,
+                0 0 15px 0 rgba(255, 255, 255, 0.9) inset,
                 0 0 20px var(--theme-glow);
             transform: scale(1.02);
         }
@@ -127,14 +119,14 @@
                 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
-        /* 修正後的選單：淺色模式下保有強烈清透感與高光邊框 */
+        /* 徹底修復的下拉選單：淺色模式下保有半透明玻璃感與細緻高光邊框 */
         .glass-menu-liquid {
             backdrop-filter: blur(24px) saturate(200%);
             -webkit-backdrop-filter: blur(24px) saturate(200%);
-            background: rgba(255, 255, 255, 0.82);
-            border: 1.5px solid rgba(255, 255, 255, 1);
+            background: rgba(255, 255, 255, 0.75);
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
             box-shadow: 
-                0 0 25px 0 rgba(255, 255, 255, 0.9) inset,
+                0 0 20px 0 rgba(255, 255, 255, 0.8) inset,
                 0 15px 35px -5px rgba(0, 0, 0, 0.08);
             overflow: hidden;
             position: relative;
@@ -152,7 +144,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.8), transparent 70%);
+            background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.6), transparent 70%);
             pointer-events: none;
         }
 
@@ -186,12 +178,10 @@
         <div class="flex items-center gap-2">
             <!-- 模式切換按鈕 -->
             <button onclick="toggleColorMode()" class="glass-btn p-2.5 rounded-2xl active:scale-95 flex items-center justify-center cursor-pointer text-gray-800 dark:text-slate-100" title="Toggle Light/Dark Mode">
-                <!-- 太陽圖示 (淺色模式顯示) -->
                 <svg class="w-4 h-4 block dark:hidden stroke-current fill-none" viewBox="0 0 24 24" stroke-width="2">
                     <circle cx="12" cy="12" r="5"></circle>
                     <path stroke-linecap="round" d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
                 </svg>
-                <!-- 月亮圖示 (深色模式顯示) -->
                 <svg class="w-4 h-4 hidden dark:block stroke-current fill-none" viewBox="0 0 24 24" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
                 </svg>
@@ -343,10 +333,15 @@
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('color-mode', isDark ? 'dark' : 'light');
             
-            // 更新 Safari theme-color
+            // 即時更新 Safari 頂欄 theme-color
             const computedBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-main').trim();
-            const meta = document.querySelector('meta[name="theme-color"]');
-            if (meta) meta.content = computedBg;
+            let meta = document.querySelector('meta[name="theme-color"]');
+            if (!meta) {
+                meta = document.createElement('meta');
+                meta.name = 'theme-color';
+                document.head.appendChild(meta);
+            }
+            meta.content = computedBg;
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
