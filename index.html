@@ -28,7 +28,7 @@
 
     <style>
         /* -------------------------------------
-           8 種主題色 (已將 Rose 替換為 Sky Blue，修正 Slate 純灰度)
+           8 種主題色
            ------------------------------------- */
         /* 1. Blue */
         [data-theme="blue"] {
@@ -98,7 +98,7 @@
             }
         }
 
-        /* 5. Sky Blue (替換 Rose) */
+        /* 5. Sky Blue */
         [data-theme="sky"] {
             --bg-main: #f0f9ff;
             --text-main: #0c4a6e;
@@ -149,7 +149,7 @@
             }
         }
 
-        /* 8. Slate (無藍調中性碳灰) */
+        /* 8. Slate */
         [data-theme="slate"] {
             --bg-main: #f3f4f6;
             --text-main: #111827;
@@ -179,7 +179,7 @@
             transition: background-color 0.3s ease;
         }
 
-        /* Liquid Glass 卡片：淺色模式下維持純白色背景 (#ffffff) */
+        /* 淺色模式下卡片純白維持 */
         .liquid-glass {
             background: #ffffff;
             backdrop-filter: blur(24px) saturate(190%);
@@ -202,7 +202,6 @@
             }
         }
 
-        /* Liquid Glass 按鈕：淺色模式下維持純白色背景 (#ffffff) */
         .glass-btn {
             background: #ffffff;
             backdrop-filter: blur(16px);
@@ -236,15 +235,15 @@
             }
         }
 
-        /* Liquid Glass 選單：淺色模式下維持純白色背景 (#ffffff) */
+        /* 【已修復】淺色模式選單：改為高質感的半透明玻璃材質 (帶點霧面與高光) */
         .glass-menu-liquid {
-            backdrop-filter: blur(20px) saturate(230%) contrast(108%);
-            -webkit-backdrop-filter: blur(20px) saturate(230%) contrast(108%);
-            background: #ffffff;
-            border: 1.5px solid rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(24px) saturate(200%);
+            -webkit-backdrop-filter: blur(24px) saturate(200%);
+            background: rgba(255, 255, 255, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
             box-shadow: 
-                0 0 25px 0 rgba(255, 255, 255, 0.8) inset,
-                0 20px 40px rgba(0, 0, 0, 0.1);
+                0 0 20px 0 rgba(255, 255, 255, 0.8) inset,
+                0 15px 35px -5px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             position: relative;
         }
@@ -263,7 +262,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.5), transparent 70%);
+            background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.6), transparent 70%);
             pointer-events: none;
         }
 
