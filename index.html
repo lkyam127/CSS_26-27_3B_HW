@@ -235,28 +235,18 @@
             }
         }
 
-        /* 完美融合的 Glass 風格下拉選單 */
-        .glass-menu-liquid {
-            backdrop-filter: blur(24px) saturate(200%);
-            -webkit-backdrop-filter: blur(24px) saturate(200%);
-            background: rgba(255, 255, 255, 0.75);
-            border: 1.5px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 
-                0 0 20px 0 rgba(255, 255, 255, 0.6) inset,
-                0 15px 35px -5px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            position: relative;
+        /* 僅調整選單：改為半透明玻璃材質，解決不透明問題 */
+        #theme-menu {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         @media (prefers-color-scheme: dark) {
-            .glass-menu-liquid {
-                background: rgba(18, 20, 23, 0.75);
-                backdrop-filter: blur(24px) saturate(200%);
-                -webkit-backdrop-filter: blur(24px) saturate(200%);
+            #theme-menu {
+                background: rgba(18, 20, 23, 0.85);
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                box-shadow: 
-                    0 0 15px 0 rgba(255, 255, 255, 0.03) inset,
-                    0 20px 45px rgba(0, 0, 0, 0.65);
             }
         }
 
@@ -293,11 +283,11 @@
                 <span>Theme</span>
             </button>
 
-            <!-- 下拉選單：已改為 Glass 風格 -->
-            <div id="theme-menu" class="hidden absolute right-0 mt-3 w-52 glass-menu-liquid rounded-2xl p-2 z-50">
-                <div class="text-xs font-semibold text-gray-600 dark:text-slate-400 px-3 py-1.5 mb-1 border-b border-black/10 dark:border-white/5 relative z-10">Select Theme Color</div>
+            <!-- 下拉選單 -->
+            <div id="theme-menu" class="hidden absolute right-0 mt-3 w-52 rounded-2xl p-2 z-50 shadow-xl">
+                <div class="text-xs font-semibold text-gray-600 dark:text-slate-400 px-3 py-1.5 mb-1 border-b border-black/10 dark:border-white/5">Select Theme Color</div>
                 
-                <div class="grid grid-cols-2 gap-1 relative z-10">
+                <div class="grid grid-cols-2 gap-1">
                     <button onclick="setTheme('blue')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition">
                         <span class="w-3.5 h-3.5 rounded-full bg-blue-600 shrink-0 shadow-sm"></span> Blue
                     </button>
