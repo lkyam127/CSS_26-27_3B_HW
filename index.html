@@ -1,11 +1,10 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Homework</title>
     
-    <!-- 頁面初始化：讀取主題並動態獲取計算後的 --bg-main 注入 Safari theme-color -->
     <script>
         (function() {
             const savedTheme = localStorage.getItem('user-theme') || 'blue';
@@ -98,7 +97,7 @@
             }
         }
 
-        /* 5. Sky Blue */
+        /* 5. Sky */
         [data-theme="sky"] {
             --bg-main: #f0f9ff;
             --text-main: #0c4a6e;
@@ -297,7 +296,6 @@
                     <button onclick="setTheme('amber')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition">
                         <span class="w-3.5 h-3.5 rounded-full bg-amber-600 shrink-0 shadow-sm"></span> Amber
                     </button>
-                    <!-- 這裡將 Sky Blue 改為 Sky，防止換行不協調 -->
                     <button onclick="setTheme('sky')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition">
                         <span class="w-3.5 h-3.5 rounded-full bg-sky-500 shrink-0 shadow-sm"></span> Sky
                     </button>
@@ -317,12 +315,12 @@
 
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        <section id="left-calendar-card" class="lg:col-span-4 liquid-glass rounded-3xl p-5 flex flex-col justify-between h-fit">
+        <section id="left-calendar-card" class="lg:col-span-4 liquid-glass rounded-3xl p-5 flex flex-col justify-between h-fit relative overflow-hidden">
             <div>
-                <div class="flex items-center justify-between mb-4 pb-3 border-b border-black/10 dark:border-white/5">
-                    <button onclick="changeMonth(-1)" class="p-2 text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition font-bold">&lt;</button>
-                    <h2 id="calendar-month-label" class="text-base font-bold text-gray-800 dark:text-slate-200"></h2>
-                    <button onclick="changeMonth(1)" class="p-2 text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition font-bold">&gt;</button>
+                <div class="w-full flex items-center justify-between mb-4 pb-3 border-b border-black/10 dark:border-white/5">
+                    <button onclick="changeMonth(-1)" class="p-2 shrink-0 text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition font-bold">&lt;</button>
+                    <h2 id="calendar-month-label" class="text-base font-bold text-gray-800 dark:text-slate-200 text-center truncate px-2"></h2>
+                    <button onclick="changeMonth(1)" class="p-2 shrink-0 text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition font-bold">&gt;</button>
                 </div>
                 <div id="calendar-grid" class="grid grid-cols-7 gap-1.5"></div>
             </div>
@@ -332,7 +330,7 @@
             </div>
         </section>
 
-        <section id="right-content-card" class="lg:col-span-8 liquid-glass rounded-3xl p-5 flex flex-col min-h-[380px] justify-center items-center">
+        <section id="right-content-card" class="lg:col-span-8 liquid-glass rounded-3xl p-5 flex flex-col min-h-[380px] justify-center items-center relative overflow-hidden">
             
             <div id="loading-state" class="w-full flex-1 flex flex-col items-center justify-center">
                 <div class="w-8 h-8 border-4 border-gray-300/40 theme-spinner rounded-full animate-spin"></div>
