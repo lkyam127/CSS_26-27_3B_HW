@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Homework</title>
     
-    <!-- 頁面初始化：讀取主題並動態注入 Safari theme-color -->
+    <!-- 頁面初始化：讀取主題並動態獲取計算後的 --bg-main 注入 Safari theme-color -->
     <script>
         (function() {
             const savedTheme = localStorage.getItem('user-theme') || 'blue';
             document.documentElement.setAttribute('data-theme', savedTheme);
 
-            const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const themeBgColor = isDark ? '#0b1329' : '#f4f5f7';
-
-            const meta = document.createElement('meta');
-            meta.name = 'theme-color';
-            meta.content = themeBgColor;
-            document.getElementsByTagName('head')[0].appendChild(meta);
+            window.addEventListener('DOMContentLoaded', () => {
+                const computedBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-main').trim();
+                const meta = document.createElement('meta');
+                meta.name = 'theme-color';
+                meta.content = computedBg || '#0b1329';
+                document.getElementsByTagName('head')[0].appendChild(meta);
+            });
         })();
     </script>
 
@@ -27,64 +27,159 @@
     </script>
 
     <style>
-        :root { 
-            --bg-main: #f4f5f7;
+        /* -------------------------------------
+           8 種主題色 (含微調動態全域背景 --bg-main)
+           ------------------------------------- */
+        /* 1. Blue */
+        [data-theme="blue"] {
+            --bg-main: #f3f6fc;
             --text-main: #1f2937;
-
             --theme-color: #2563eb;
             --theme-text: #2563eb;
-            --theme-glow: rgba(37, 99, 235, 0.25); /* 亮色模式維持適度光暈 */
+            --theme-glow: rgba(37, 99, 235, 0.25);
         }
-
         @media (prefers-color-scheme: dark) {
-            :root {
+            [data-theme="blue"] {
                 --bg-main: #0b1329;
                 --text-main: #f8fafc;
-
                 --theme-text: #60a5fa;
-                --theme-glow: rgba(96, 165, 250, 0.12); /* 深色模式：大幅削弱主題光暈 */
+                --theme-glow: rgba(96, 165, 250, 0.12);
             }
         }
 
-        /* 8 種主題色彩設定 */
-        [data-theme="blue"] { --theme-color: #2563eb; --theme-text: #2563eb; --theme-glow: rgba(37, 99, 235, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="blue"] { --theme-text: #60a5fa; --theme-glow: rgba(96, 165, 250, 0.12); } }
+        /* 2. Emerald */
+        [data-theme="emerald"] {
+            --bg-main: #f2f8f5;
+            --text-main: #1f2937;
+            --theme-color: #059669;
+            --theme-text: #059669;
+            --theme-glow: rgba(5, 150, 105, 0.25);
+        }
+        @media (prefers-color-scheme: dark) {
+            [data-theme="emerald"] {
+                --bg-main: #0a1c17;
+                --text-main: #f8fafc;
+                --theme-text: #34d399;
+                --theme-glow: rgba(52, 211, 153, 0.12);
+            }
+        }
 
-        [data-theme="emerald"] { --theme-color: #059669; --theme-text: #059669; --theme-glow: rgba(5, 150, 105, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="emerald"] { --theme-text: #34d399; --theme-glow: rgba(52, 211, 153, 0.12); } }
+        /* 3. Purple */
+        [data-theme="purple"] {
+            --bg-main: #f6f3fc;
+            --text-main: #1f2937;
+            --theme-color: #7c3aed;
+            --theme-text: #7c3aed;
+            --theme-glow: rgba(124, 58, 237, 0.25);
+        }
+        @media (prefers-color-scheme: dark) {
+            [data-theme="purple"] {
+                --bg-main: #120d24;
+                --text-main: #f8fafc;
+                --theme-text: #a78bfa;
+                --theme-glow: rgba(167, 139, 250, 0.12);
+            }
+        }
 
-        [data-theme="purple"] { --theme-color: #7c3aed; --theme-text: #7c3aed; --theme-glow: rgba(124, 58, 237, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="purple"] { --theme-text: #a78bfa; --theme-glow: rgba(167, 139, 250, 0.12); } }
+        /* 4. Amber */
+        [data-theme="amber"] {
+            --bg-main: #faf6ef;
+            --text-main: #1f2937;
+            --theme-color: #d97706;
+            --theme-text: #d97706;
+            --theme-glow: rgba(217, 119, 6, 0.25);
+        }
+        @media (prefers-color-scheme: dark) {
+            [data-theme="amber"] {
+                --bg-main: #1a1409;
+                --text-main: #f8fafc;
+                --theme-text: #fbbf24;
+                --theme-glow: rgba(251, 191, 36, 0.12);
+            }
+        }
 
-        [data-theme="amber"] { --theme-color: #d97706; --theme-text: #d97706; --theme-glow: rgba(217, 119, 6, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="amber"] { --theme-text: #fbbf24; --theme-glow: rgba(251, 191, 36, 0.12); } }
+        /* 5. Rose */
+        [data-theme="rose"] {
+            --bg-main: #fdf2f4;
+            --text-main: #1f2937;
+            --theme-color: #e11d48;
+            --theme-text: #e11d48;
+            --theme-glow: rgba(225, 29, 72, 0.25);
+        }
+        @media (prefers-color-scheme: dark) {
+            [data-theme="rose"] {
+                --bg-main: #1f0b12;
+                --text-main: #f8fafc;
+                --theme-text: #fb7185;
+                --theme-glow: rgba(251, 113, 133, 0.12);
+            }
+        }
 
-        [data-theme="rose"] { --theme-color: #e11d48; --theme-text: #e11d48; --theme-glow: rgba(225, 29, 72, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="rose"] { --theme-text: #fb7185; --theme-glow: rgba(251, 113, 133, 0.12); } }
+        /* 6. Cyan */
+        [data-theme="cyan"] {
+            --bg-main: #f0f9fa;
+            --text-main: #1f2937;
+            --theme-color: #0891b2;
+            --theme-text: #0891b2;
+            --theme-glow: rgba(8, 145, 178, 0.25);
+        }
+        @media (prefers-color-scheme: dark) {
+            [data-theme="cyan"] {
+                --bg-main: #071921;
+                --text-main: #f8fafc;
+                --theme-text: #22d3ee;
+                --theme-glow: rgba(34, 211, 238, 0.12);
+            }
+        }
 
-        [data-theme="cyan"] { --theme-color: #0891b2; --theme-text: #0891b2; --theme-glow: rgba(8, 145, 178, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="cyan"] { --theme-text: #22d3ee; --theme-glow: rgba(34, 211, 238, 0.12); } }
+        /* 7. Indigo */
+        [data-theme="indigo"] {
+            --bg-main: #f4f4fc;
+            --text-main: #1f2937;
+            --theme-color: #4f46e5;
+            --theme-text: #4f46e5;
+            --theme-glow: rgba(79, 70, 229, 0.25);
+        }
+        @media (prefers-color-scheme: dark) {
+            [data-theme="indigo"] {
+                --bg-main: #0d0f28;
+                --text-main: #f8fafc;
+                --theme-text: #818cf8;
+                --theme-glow: rgba(129, 140, 248, 0.12);
+            }
+        }
 
-        [data-theme="indigo"] { --theme-color: #4f46e5; --theme-text: #4f46e5; --theme-glow: rgba(79, 70, 229, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="indigo"] { --theme-text: #818cf8; --theme-glow: rgba(129, 140, 248, 0.12); } }
-
-        [data-theme="slate"] { --theme-color: #475569; --theme-text: #475569; --theme-glow: rgba(71, 85, 105, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="slate"] { --theme-text: #94a3b8; --theme-glow: rgba(148, 163, 184, 0.12); } }
+        /* 8. Slate */
+        [data-theme="slate"] {
+            --bg-main: #f4f5f7;
+            --text-main: #1f2937;
+            --theme-color: #475569;
+            --theme-text: #475569;
+            --theme-glow: rgba(71, 85, 105, 0.25);
+        }
+        @media (prefers-color-scheme: dark) {
+            [data-theme="slate"] {
+                --bg-main: #0f172a;
+                --text-main: #f8fafc;
+                --theme-text: #94a3b8;
+                --theme-glow: rgba(148, 163, 184, 0.12);
+            }
+        }
 
         body { 
             background-color: var(--bg-main); 
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
             -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.3s ease;
         }
 
         header {
             background-color: var(--bg-main);
+            transition: background-color 0.3s ease;
         }
 
-        /* -------------------------------------
-           Liquid Glass 卡片
-           ------------------------------------- */
+        /* Liquid Glass 卡片 */
         .liquid-glass {
             background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(24px) saturate(190%);
@@ -97,20 +192,17 @@
 
         @media (prefers-color-scheme: dark) {
             .liquid-glass {
-                background: rgba(21, 31, 56, 0.45);
+                background: rgba(255, 255, 255, 0.03);
                 backdrop-filter: blur(24px) saturate(190%);
                 -webkit-backdrop-filter: blur(24px) saturate(190%);
-                /* 深色模式：細邊框、極微弱高光 */
-                border: 1px solid rgba(255, 255, 255, 0.06);
+                border: 1px solid rgba(255, 255, 255, 0.07);
                 box-shadow: 
                     0 0 10px 0 rgba(255, 255, 255, 0.02) inset,
                     0 12px 35px -5px rgba(0, 0, 0, 0.45);
             }
         }
 
-        /* -------------------------------------
-           Liquid Glass 按鈕
-           ------------------------------------- */
+        /* Liquid Glass 按鈕 */
         .glass-btn {
             background: rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(16px);
@@ -132,26 +224,23 @@
         @media (prefers-color-scheme: dark) {
             .glass-btn {
                 background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.12);
                 box-shadow: 
                     0 0 8px 0 rgba(255, 255, 255, 0.03) inset,
                     0 4px 15px rgba(0, 0, 0, 0.3);
             }
             .glass-btn:hover {
-                /* 深色模式懸停：收斂高光與光暈 */
                 box-shadow: 
                     0 0 8px 0 rgba(255, 255, 255, 0.08) inset,
                     0 0 15px var(--theme-glow);
             }
         }
 
-        /* -------------------------------------
-           Liquid Glass 選單 (液體折射感)
-           ------------------------------------- */
+        /* Liquid Glass 選單 */
         .glass-menu-liquid {
             backdrop-filter: blur(20px) saturate(230%) contrast(108%);
             -webkit-backdrop-filter: blur(20px) saturate(230%) contrast(108%);
-            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.65), rgba(240, 240, 250, 0.45));
+            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.75), rgba(240, 240, 250, 0.55));
             border: 1.5px solid rgba(255, 255, 255, 0.85);
             box-shadow: 
                 0 0 25px 0 rgba(255, 255, 255, 0.7) inset,
@@ -162,9 +251,8 @@
 
         @media (prefers-color-scheme: dark) {
             .glass-menu-liquid {
-                background: radial-gradient(circle at 50% 0%, rgba(30, 45, 78, 0.6), rgba(15, 23, 42, 0.5));
-                /* 深色模式選單：極細邊框與幾乎隱形的內發光 */
-                border: 1px solid rgba(255, 255, 255, 0.08);
+                background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.5));
+                border: 1px solid rgba(255, 255, 255, 0.1);
                 box-shadow: 
                     0 0 15px 0 rgba(255, 255, 255, 0.03) inset,
                     0 20px 45px rgba(0, 0, 0, 0.65);
@@ -181,7 +269,6 @@
 
         @media (prefers-color-scheme: dark) {
             .glass-menu-liquid::before {
-                /* 深色模式：減輕液體表面反光 */
                 background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.06), transparent 60%);
             }
         }
@@ -195,7 +282,6 @@
             color: #ffffff !important; 
             font-weight: bold; 
             border-color: var(--theme-color) !important; 
-            /* 光暈直接套用調暗後的變數 */
             box-shadow: 0 0 12px var(--theme-glow);
         }
 
@@ -211,7 +297,7 @@
             <h1 class="text-xl font-bold tracking-wide text-gray-800 dark:text-slate-100">Daily Homework</h1>
         </div>
         
-        <!-- 右上角 Liquid Glass 風格 Theme 按鈕 -->
+        <!-- 右上角 Theme 按鈕 -->
         <div class="relative">
             <button id="theme-menu-btn" onclick="toggleThemeMenu(event)" class="glass-btn px-4 py-2 rounded-2xl active:scale-95 flex items-center gap-2 cursor-pointer text-xs font-semibold text-gray-800 dark:text-slate-100">
                 <svg class="w-4 h-4 theme-text stroke-current fill-none" viewBox="0 0 24 24" stroke-width="2">
