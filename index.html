@@ -33,7 +33,7 @@
 
             --theme-color: #2563eb;
             --theme-text: #2563eb;
-            --theme-glow: rgba(37, 99, 235, 0.25);
+            --theme-glow: rgba(37, 99, 235, 0.25); /* 亮色模式維持適度光暈 */
         }
 
         @media (prefers-color-scheme: dark) {
@@ -42,34 +42,34 @@
                 --text-main: #f8fafc;
 
                 --theme-text: #60a5fa;
-                --theme-glow: rgba(96, 165, 250, 0.3);
+                --theme-glow: rgba(96, 165, 250, 0.12); /* 深色模式：大幅削弱主題光暈 */
             }
         }
 
         /* 8 種主題色彩設定 */
         [data-theme="blue"] { --theme-color: #2563eb; --theme-text: #2563eb; --theme-glow: rgba(37, 99, 235, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="blue"] { --theme-text: #60a5fa; } }
+        @media (prefers-color-scheme: dark) { [data-theme="blue"] { --theme-text: #60a5fa; --theme-glow: rgba(96, 165, 250, 0.12); } }
 
         [data-theme="emerald"] { --theme-color: #059669; --theme-text: #059669; --theme-glow: rgba(5, 150, 105, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="emerald"] { --theme-text: #34d399; } }
+        @media (prefers-color-scheme: dark) { [data-theme="emerald"] { --theme-text: #34d399; --theme-glow: rgba(52, 211, 153, 0.12); } }
 
         [data-theme="purple"] { --theme-color: #7c3aed; --theme-text: #7c3aed; --theme-glow: rgba(124, 58, 237, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="purple"] { --theme-text: #a78bfa; } }
+        @media (prefers-color-scheme: dark) { [data-theme="purple"] { --theme-text: #a78bfa; --theme-glow: rgba(167, 139, 250, 0.12); } }
 
         [data-theme="amber"] { --theme-color: #d97706; --theme-text: #d97706; --theme-glow: rgba(217, 119, 6, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="amber"] { --theme-text: #fbbf24; } }
+        @media (prefers-color-scheme: dark) { [data-theme="amber"] { --theme-text: #fbbf24; --theme-glow: rgba(251, 191, 36, 0.12); } }
 
         [data-theme="rose"] { --theme-color: #e11d48; --theme-text: #e11d48; --theme-glow: rgba(225, 29, 72, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="rose"] { --theme-text: #fb7185; } }
+        @media (prefers-color-scheme: dark) { [data-theme="rose"] { --theme-text: #fb7185; --theme-glow: rgba(251, 113, 133, 0.12); } }
 
         [data-theme="cyan"] { --theme-color: #0891b2; --theme-text: #0891b2; --theme-glow: rgba(8, 145, 178, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="cyan"] { --theme-text: #22d3ee; } }
+        @media (prefers-color-scheme: dark) { [data-theme="cyan"] { --theme-text: #22d3ee; --theme-glow: rgba(34, 211, 238, 0.12); } }
 
         [data-theme="indigo"] { --theme-color: #4f46e5; --theme-text: #4f46e5; --theme-glow: rgba(79, 70, 229, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="indigo"] { --theme-text: #818cf8; } }
+        @media (prefers-color-scheme: dark) { [data-theme="indigo"] { --theme-text: #818cf8; --theme-glow: rgba(129, 140, 248, 0.12); } }
 
         [data-theme="slate"] { --theme-color: #475569; --theme-text: #475569; --theme-glow: rgba(71, 85, 105, 0.25); }
-        @media (prefers-color-scheme: dark) { [data-theme="slate"] { --theme-text: #94a3b8; } }
+        @media (prefers-color-scheme: dark) { [data-theme="slate"] { --theme-text: #94a3b8; --theme-glow: rgba(148, 163, 184, 0.12); } }
 
         body { 
             background-color: var(--bg-main); 
@@ -82,14 +82,14 @@
             background-color: var(--bg-main);
         }
 
-        /* ✨ 需求一：全方向平均的高光 Liquid Glass 卡片 */
+        /* -------------------------------------
+           Liquid Glass 卡片
+           ------------------------------------- */
         .liquid-glass {
             background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(24px) saturate(190%);
             -webkit-backdrop-filter: blur(24px) saturate(190%);
-            /* 四周平均的高光邊框 */
             border: 1.5px solid rgba(255, 255, 255, 0.7);
-            /* 內外全方位均勻擴散的立體柔光，絕非僅上下 */
             box-shadow: 
                 0 0 20px 0 rgba(255, 255, 255, 0.5) inset,
                 0 10px 30px -5px rgba(0, 0, 0, 0.06);
@@ -100,36 +100,26 @@
                 background: rgba(21, 31, 56, 0.45);
                 backdrop-filter: blur(24px) saturate(190%);
                 -webkit-backdrop-filter: blur(24px) saturate(190%);
-                border: 1.5px solid rgba(255, 255, 255, 0.18);
+                /* 深色模式：細邊框、極微弱高光 */
+                border: 1px solid rgba(255, 255, 255, 0.06);
                 box-shadow: 
-                    0 0 15px 0 rgba(255, 255, 255, 0.08) inset,
-                    0 12px 35px -5px rgba(0, 0, 0, 0.4);
+                    0 0 10px 0 rgba(255, 255, 255, 0.02) inset,
+                    0 12px 35px -5px rgba(0, 0, 0, 0.45);
             }
         }
 
-        /* ✨ 全方向均勻高光 Liquid 按鈕 */
+        /* -------------------------------------
+           Liquid Glass 按鈕
+           ------------------------------------- */
         .glass-btn {
             background: rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1.5px solid rgba(255, 255, 255, 0.8);
-            /* 360 度均勻內發光與外擴光彩 */
             box-shadow: 
                 0 0 10px 0 rgba(255, 255, 255, 0.6) inset,
                 0 4px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .glass-btn {
-                background: rgba(255, 255, 255, 0.08);
-                backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px);
-                border: 1.5px solid rgba(255, 255, 255, 0.22);
-                box-shadow: 
-                    0 0 12px 0 rgba(255, 255, 255, 0.1) inset,
-                    0 4px 20px rgba(0, 0, 0, 0.3);
-            }
         }
 
         .glass-btn:hover {
@@ -139,9 +129,26 @@
             transform: scale(1.02);
         }
 
-        /* ✨ 需求二：液態折射扭曲選單 (Liquid Distortion Menu) */
+        @media (prefers-color-scheme: dark) {
+            .glass-btn {
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 
+                    0 0 8px 0 rgba(255, 255, 255, 0.03) inset,
+                    0 4px 15px rgba(0, 0, 0, 0.3);
+            }
+            .glass-btn:hover {
+                /* 深色模式懸停：收斂高光與光暈 */
+                box-shadow: 
+                    0 0 8px 0 rgba(255, 255, 255, 0.08) inset,
+                    0 0 15px var(--theme-glow);
+            }
+        }
+
+        /* -------------------------------------
+           Liquid Glass 選單 (液體折射感)
+           ------------------------------------- */
         .glass-menu-liquid {
-            /* 複合飽和度、對比度與高強度模糊，打造液體重折射/扭曲視覺 */
             backdrop-filter: blur(20px) saturate(230%) contrast(108%);
             -webkit-backdrop-filter: blur(20px) saturate(230%) contrast(108%);
             background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.65), rgba(240, 240, 250, 0.45));
@@ -155,21 +162,28 @@
 
         @media (prefers-color-scheme: dark) {
             .glass-menu-liquid {
-                background: radial-gradient(circle at 50% 0%, rgba(30, 45, 78, 0.7), rgba(15, 23, 42, 0.55));
-                border: 1.5px solid rgba(255, 255, 255, 0.22);
+                background: radial-gradient(circle at 50% 0%, rgba(30, 45, 78, 0.6), rgba(15, 23, 42, 0.5));
+                /* 深色模式選單：極細邊框與幾乎隱形的內發光 */
+                border: 1px solid rgba(255, 255, 255, 0.08);
                 box-shadow: 
-                    0 0 25px 0 rgba(255, 255, 255, 0.12) inset,
-                    0 20px 45px rgba(0, 0, 0, 0.55);
+                    0 0 15px 0 rgba(255, 255, 255, 0.03) inset,
+                    0 20px 45px rgba(0, 0, 0, 0.65);
             }
         }
 
-        /* 模擬液體表面的微立體弧形光澤 */
         .glass-menu-liquid::before {
             content: '';
             position: absolute;
             inset: 0;
             background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.4), transparent 70%);
             pointer-events: none;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .glass-menu-liquid::before {
+                /* 深色模式：減輕液體表面反光 */
+                background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.06), transparent 60%);
+            }
         }
 
         .theme-bg { background-color: var(--theme-color) !important; }
@@ -181,7 +195,8 @@
             color: #ffffff !important; 
             font-weight: bold; 
             border-color: var(--theme-color) !important; 
-            box-shadow: 0 0 15px var(--theme-glow);
+            /* 光暈直接套用調暗後的變數 */
+            box-shadow: 0 0 12px var(--theme-glow);
         }
 
         .hdr-image { dynamic-range: high; }
@@ -205,33 +220,33 @@
                 <span>Theme</span>
             </button>
 
-            <!-- 下拉選單：Liquid 折射感升級且清晰可讀 -->
+            <!-- 下拉選單 -->
             <div id="theme-menu" class="hidden absolute right-0 mt-3 w-52 glass-menu-liquid rounded-2xl p-2 z-50">
-                <div class="text-xs font-semibold text-gray-600 dark:text-slate-300 px-3 py-1.5 mb-1 border-b border-black/10 dark:border-white/10 relative z-10">Select Theme Color</div>
+                <div class="text-xs font-semibold text-gray-600 dark:text-slate-400 px-3 py-1.5 mb-1 border-b border-black/10 dark:border-white/5 relative z-10">Select Theme Color</div>
                 
                 <div class="grid grid-cols-2 gap-1 relative z-10">
-                    <button onclick="setTheme('blue')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-100 hover:bg-black/5 dark:hover:bg-white/15 rounded-xl transition">
+                    <button onclick="setTheme('blue')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition">
                         <span class="w-3.5 h-3.5 rounded-full bg-blue-600 shrink-0 shadow-sm"></span> Blue
                     </button>
-                    <button onclick="setTheme('emerald')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-100 hover:bg-black/5 dark:hover:bg-white/15 rounded-xl transition">
+                    <button onclick="setTheme('emerald')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition">
                         <span class="w-3.5 h-3.5 rounded-full bg-emerald-600 shrink-0 shadow-sm"></span> Emerald
                     </button>
-                    <button onclick="setTheme('purple')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-100 hover:bg-black/5 dark:hover:bg-white/15 rounded-xl transition">
+                    <button onclick="setTheme('purple')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition">
                         <span class="w-3.5 h-3.5 rounded-full bg-purple-600 shrink-0 shadow-sm"></span> Purple
                     </button>
-                    <button onclick="setTheme('amber')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-100 hover:bg-black/5 dark:hover:bg-white/15 rounded-xl transition">
+                    <button onclick="setTheme('amber')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition">
                         <span class="w-3.5 h-3.5 rounded-full bg-amber-600 shrink-0 shadow-sm"></span> Amber
                     </button>
-                    <button onclick="setTheme('rose')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-100 hover:bg-black/5 dark:hover:bg-white/15 rounded-xl transition">
+                    <button onclick="setTheme('rose')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition">
                         <span class="w-3.5 h-3.5 rounded-full bg-rose-600 shrink-0 shadow-sm"></span> Rose
                     </button>
-                    <button onclick="setTheme('cyan')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-100 hover:bg-black/5 dark:hover:bg-white/15 rounded-xl transition">
+                    <button onclick="setTheme('cyan')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition">
                         <span class="w-3.5 h-3.5 rounded-full bg-cyan-600 shrink-0 shadow-sm"></span> Cyan
                     </button>
-                    <button onclick="setTheme('indigo')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-100 hover:bg-black/5 dark:hover:bg-white/15 rounded-xl transition">
+                    <button onclick="setTheme('indigo')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition">
                         <span class="w-3.5 h-3.5 rounded-full bg-indigo-600 shrink-0 shadow-sm"></span> Indigo
                     </button>
-                    <button onclick="setTheme('slate')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-100 hover:bg-black/5 dark:hover:bg-white/15 rounded-xl transition">
+                    <button onclick="setTheme('slate')" class="flex items-center gap-2 px-2.5 py-2 text-xs font-semibold text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition">
                         <span class="w-3.5 h-3.5 rounded-full bg-slate-600 shrink-0 shadow-sm"></span> Slate
                     </button>
                 </div>
@@ -242,23 +257,23 @@
     <!-- 主布局內容 -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        <!-- 左側：全方向均勻高光日曆卡片 -->
+        <!-- 左側：日曆卡片 -->
         <section id="left-calendar-card" class="lg:col-span-4 liquid-glass rounded-3xl p-5 flex flex-col justify-between h-fit">
             <div>
-                <div class="flex items-center justify-between mb-4 pb-3 border-b border-black/10 dark:border-white/10">
-                    <button onclick="changeMonth(-1)" class="p-2 text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition font-bold">&lt;</button>
-                    <h2 id="calendar-month-label" class="text-base font-bold text-gray-800 dark:text-slate-100"></h2>
-                    <button onclick="changeMonth(1)" class="p-2 text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition font-bold">&gt;</button>
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-black/10 dark:border-white/5">
+                    <button onclick="changeMonth(-1)" class="p-2 text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition font-bold">&lt;</button>
+                    <h2 id="calendar-month-label" class="text-base font-bold text-gray-800 dark:text-slate-200"></h2>
+                    <button onclick="changeMonth(1)" class="p-2 text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition font-bold">&gt;</button>
                 </div>
                 <div id="calendar-grid" class="grid grid-cols-7 gap-1.5"></div>
             </div>
 
-            <div class="mt-4 pt-3 border-t border-black/10 dark:border-white/10 text-xs text-gray-500 dark:text-gray-400 text-center">
-                Selected: <span id="selected-date-label" class="font-bold text-gray-800 dark:text-slate-200"></span>
+            <div class="mt-4 pt-3 border-t border-black/10 dark:border-white/5 text-xs text-gray-500 dark:text-gray-400 text-center">
+                Selected: <span id="selected-date-label" class="font-bold text-gray-800 dark:text-slate-300"></span>
             </div>
         </section>
 
-        <!-- 右側：全方向均勻高光內容卡片 -->
+        <!-- 右側：內容卡片 -->
         <section id="right-content-card" class="lg:col-span-8 liquid-glass rounded-3xl p-5 flex flex-col min-h-[380px] justify-center items-center">
             
             <!-- Loading State -->
@@ -277,7 +292,7 @@
             <div id="content-state" class="hidden w-full flex-1 grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
                 <!-- Text Container -->
                 <div class="md:col-span-2 flex flex-col h-full space-y-3">
-                    <h3 class="text-base font-bold theme-text border-b pb-2 border-black/10 dark:border-white/10 flex items-center gap-2">
+                    <h3 class="text-base font-bold theme-text border-b pb-2 border-black/10 dark:border-white/5 flex items-center gap-2">
                         <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span>Notes</span>
                     </h3>
@@ -286,11 +301,11 @@
 
                 <!-- Image Container -->
                 <div class="md:col-span-1 space-y-3 flex flex-col">
-                    <h3 class="text-base font-bold theme-text border-b pb-2 border-black/10 dark:border-white/10 flex items-center gap-2">
+                    <h3 class="text-base font-bold theme-text border-b pb-2 border-black/10 dark:border-white/5 flex items-center gap-2">
                         <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         <span>Attachment</span>
                     </h3>
-                    <div id="image-container" class="rounded-2xl overflow-hidden border border-black/5 dark:border-white/10 shadow-sm bg-black/5 dark:bg-black/25 flex items-center justify-center flex-1">
+                    <div id="image-container" class="rounded-2xl overflow-hidden border border-black/5 dark:border-white/5 shadow-sm bg-black/5 dark:bg-black/25 flex items-center justify-center flex-1">
                         <img id="daily-photo" src="" alt="Daily Photo" class="hdr-image w-full h-auto object-cover max-h-[350px] cursor-pointer" onclick="window.open(this.src, '_blank')">
                     </div>
                     <p id="no-img-label" class="text-xs text-gray-400 dark:text-gray-500 text-center hidden">No photo for today</p>
@@ -391,7 +406,7 @@
             for (let d = 1; d <= totalDays; d++) {
                 const btn = document.createElement('button');
                 const isSelected = (d === selectedDay && currentMonth === selectedMonth && currentYear === selectedYear);
-                btn.className = `calendar-day aspect-square flex items-center justify-center text-xs rounded-xl border border-black/5 dark:border-white/10 text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 transition ${isSelected ? 'active' : 'bg-black/5 dark:bg-white/5'}`;
+                btn.className = `calendar-day aspect-square flex items-center justify-center text-xs rounded-xl border border-black/5 dark:border-white/5 text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 transition ${isSelected ? 'active' : 'bg-black/5 dark:bg-white/5'}`;
                 btn.innerText = d;
                 btn.onclick = () => {
                     selectedYear = currentYear;
@@ -467,7 +482,7 @@
 
                 if (hasText) {
                     textContainer.innerText = textResult;
-                    textContainer.className = "flex-1 text-sm leading-relaxed whitespace-pre-line bg-black/5 dark:bg-black/25 p-4 rounded-2xl border border-black/5 dark:border-white/5 text-gray-800 dark:text-slate-200 block text-left";
+                    textContainer.className = "flex-1 text-sm leading-relaxed whitespace-pre-line bg-black/5 dark:bg-black/25 p-4 rounded-2xl border border-black/5 dark:border-white/5 text-gray-800 dark:text-slate-300 block text-left";
                 } else {
                     textContainer.innerText = "(No text record for this date)";
                     textContainer.className = "flex-1 text-sm leading-relaxed whitespace-pre-line bg-black/5 dark:bg-black/25 p-4 rounded-2xl border border-black/5 dark:border-white/5 flex items-center justify-center text-gray-400 dark:text-gray-500 text-center";
