@@ -53,10 +53,10 @@
         <div class="w-10"></div>
     </header>
 
-    <!-- Main Content Layout (items-start 防止整體被撐開拉長) -->
+    <!-- Main Content Layout -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        <!-- Left 1/3: Calendar Card (h-fit 保持精簡高度) -->
+        <!-- Left 1/3: Calendar Card -->
         <section id="left-calendar-card" class="lg:col-span-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col justify-between h-fit transition-colors">
             <div>
                 <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-100 dark:border-slate-700">
@@ -72,7 +72,7 @@
             </div>
         </section>
 
-        <!-- Right 2/3: Content Card (min-h-[380px] 預設高度與左側月曆完全一致) -->
+        <!-- Right 2/3: Content Card -->
         <section id="right-content-card" class="lg:col-span-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col transition-colors min-h-[380px] justify-center items-center">
             
             <!-- Loading State -->
@@ -87,25 +87,25 @@
                 <p class="text-base font-medium">No record for this date</p>
             </div>
 
-            <!-- Content State -->
-            <div id="content-state" class="hidden w-full flex-1 grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
-                <!-- Text Container -->
-                <div class="md:col-span-2 flex flex-col space-y-3">
+            <!-- Content State (items-stretch 確保左右欄同高) -->
+            <div id="content-state" class="hidden w-full flex-1 grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
+                <!-- Text Container (flex-col h-full 確保能向上/向下撐滿) -->
+                <div class="md:col-span-2 flex flex-col h-full space-y-3">
                     <h3 class="text-base font-bold text-blue-600 dark:text-blue-400 border-b pb-2 border-gray-100 dark:border-slate-700 flex items-center gap-2">
                         <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span>Notes</span>
                     </h3>
-                    <div id="text-container" class="text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-100 dark:border-slate-700"></div>
+                    <div id="text-container" class="flex-1 text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-100 dark:border-slate-700"></div>
                 </div>
 
                 <!-- Image Container -->
-                <div class="md:col-span-1 space-y-3">
+                <div class="md:col-span-1 space-y-3 flex flex-col">
                     <h3 class="text-base font-bold text-blue-600 dark:text-blue-400 border-b pb-2 border-gray-100 dark:border-slate-700 flex items-center gap-2">
                         <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         <span>Attachment</span>
                     </h3>
-                    <div id="image-container" class="rounded-xl overflow-hidden border border-gray-200 dark:border-slate-700 shadow-sm bg-gray-50 dark:bg-slate-900/50 flex items-center justify-center">
-                        <img id="daily-photo" src="" alt="Daily Photo" class="hdr-image w-full h-auto object-cover max-h-[300px] cursor-pointer" onclick="window.open(this.src, '_blank')">
+                    <div id="image-container" class="rounded-xl overflow-hidden border border-gray-200 dark:border-slate-700 shadow-sm bg-gray-50 dark:bg-slate-900/50 flex items-center justify-center flex-1">
+                        <img id="daily-photo" src="" alt="Daily Photo" class="hdr-image w-full h-auto object-cover max-h-[350px] cursor-pointer" onclick="window.open(this.src, '_blank')">
                     </div>
                     <p id="no-img-label" class="text-xs text-gray-400 dark:text-gray-500 text-center hidden">No photo for today</p>
                 </div>
@@ -236,10 +236,10 @@
 
                 if (hasText) {
                     textContainer.innerText = textResult;
-                    textContainer.className = "text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-100 dark:border-slate-700 text-gray-700 dark:text-slate-200 block text-left";
+                    textContainer.className = "flex-1 text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-100 dark:border-slate-700 text-gray-700 dark:text-slate-200 block text-left";
                 } else {
                     textContainer.innerText = "(No text record for this date)";
-                    textContainer.className = "text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-100 dark:border-slate-700 text-gray-400 dark:text-gray-500 text-center";
+                    textContainer.className = "flex-1 text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-100 dark:border-slate-700 flex items-center justify-center text-gray-400 dark:text-gray-500 text-center";
                 }
 
                 if (hasImg) {
