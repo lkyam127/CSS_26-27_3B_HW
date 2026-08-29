@@ -9,10 +9,7 @@
         :root { --theme-blue: #0A6DFF; --bg-gray: #f4f5f7; }
         body { background-color: var(--bg-gray); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         .theme-header { background-color: var(--theme-blue); }
-        .month-btn.active { background-color: var(--theme-blue); color: white; font-weight: bold; }
-        .day-btn.active { background-color: var(--theme-blue); color: white; font-weight: bold; border-color: var(--theme-blue); }
-        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-        .hide-scroll::-webkit-scrollbar { display: none; }
+        .calendar-day.active { background-color: var(--theme-blue); color: white; font-weight: bold; border-color: var(--theme-blue); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -22,21 +19,21 @@
         <h1 class="text-lg md:text-xl font-bold tracking-wide">每日紀錄</h1>
     </header>
 
-    <!-- 主要內容區：iPad 橫向為左右分欄 (左1/3 + 右2/3) -->
+    <!-- 主要內容區：左右分欄 -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- 左側 1/3 (lg:col-span-4)：四邊形日曆選擇器卡片 -->
+        <!-- 左側 1/3：萬年曆卡片 -->
         <section class="lg:col-span-4 bg-white rounded-2xl shadow-sm border border-gray-200 p-5 flex flex-col justify-between h-fit">
             <div>
-                <h2 class="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wider">選擇月份</h2>
-                <!-- 月份切換 (橫向滑動) -->
-                <div id="month-selector" class="flex overflow-x-auto space-x-2 pb-3 mb-4 border-b border-gray-100 hide-scroll">
-                    <!-- JS 動態生成 -->
+                <!-- 月份切換列 (置中顯示與左右箭頭) -->
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
+                    <button onclick="changeMonth(-1)" class="p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition font-bold">&lt;</button>
+                    <h2 id="calendar-month-label" class="text-base font-bold text-gray-800"></h2>
+                    <button onclick="changeMonth(1)" class="p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition font-bold">&gt;</button>
                 </div>
 
-                <h2 class="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wider">選擇日期</h2>
-                <!-- 日期選擇 (7欄月曆網格，呈現四邊形) -->
-                <div id="day-selector" class="grid grid-cols-7 gap-2">
+                <!-- 萬年曆網格 (星期一至日 + 日期) -->
+                <div id="calendar-grid" class="grid grid-cols-7 gap-1.5">
                     <!-- JS 動態生成 -->
                 </div>
             </div>
@@ -46,7 +43,7 @@
             </div>
         </section>
 
-        <!-- 右側 2/3 (lg:col-span-8)：文字紀錄與圖片展現 -->
+        <!-- 右側 2/3：文字紀錄與圖片展現 -->
         <section class="lg:col-span-8 bg-white rounded-2xl shadow-sm border border-gray-200 p-6 min-h-[450px] flex flex-col">
             
             <!-- 狀態：載入中 -->
@@ -61,7 +58,7 @@
                 <p class="text-base font-medium">該日期無紀錄</p>
             </div>
 
-            <!-- 狀態：顯示內容 (右側 2/3 內部再劃分：左 2/3 文字 + 右 1/3 圖片) -->
+            <!-- 狀態：顯示內容 -->
             <div id="content-state" class="hidden flex-1 grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                 
                 <!-- 左側 2/3：文字內容區 -->
@@ -92,64 +89,77 @@
     </main>
 
     <script>
-        // === 自動根據你的 GitHub Repo 設定 ===
+        // === 你的 GitHub 設定 ===
         const GITHUB_USERNAME = "lkyam127";
         const GITHUB_REPO = "CSS_26-27_3B_HW_Photos";
-        
         const RAW_BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/images`;
 
-        // 預設日期設定
-        let selectedMonth = new Date().getMonth() + 1;
-        let selectedDay = new Date().getDate();
+        // 日期狀態
+        let currentDate = new Date();
+        let currentYear = currentDate.getFullYear();
+        let currentMonth = currentDate.getMonth() + 1; // 1-12
+        let selectedDay = currentDate.getDate();
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderMonthSelector();
-            renderDaySelector(selectedMonth);
+            renderCalendar();
             updateContent();
         });
 
-        // 渲染 9月 - 8月 學年制月份
-        function renderMonthSelector() {
-            const months = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8];
-            const container = document.getElementById('month-selector');
-            container.innerHTML = '';
-            
-            months.forEach(m => {
-                const btn = document.createElement('button');
-                btn.className = `month-btn px-3 py-1.5 text-xs font-medium rounded-lg text-gray-600 bg-gray-100 hover:bg-gray-200 transition shrink-0 ${m === selectedMonth ? 'active' : ''}`;
-                btn.innerText = `${m}月`;
-                btn.onclick = () => {
-                    selectedMonth = m;
-                    renderMonthSelector();
-                    renderDaySelector(m);
-                    updateContent();
-                };
-                container.appendChild(btn);
-            });
+        // 切換月份按鈕事件
+        function changeMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth > 12) {
+                currentMonth = 1;
+                currentYear++;
+            } else if (currentMonth < 1) {
+                currentMonth = 12;
+                currentYear--;
+            }
+            renderCalendar();
         }
 
-        // 渲染 1~31 號月曆網格
-        function renderDaySelector(month) {
-            const container = document.getElementById('day-selector');
-            container.innerHTML = '';
-            
-            const currentYear = new Date().getFullYear();
-            const daysInMonth = new Date(currentYear, month, 0).getDate();
+        // 渲染萬年曆網格
+        function renderCalendar() {
+            document.getElementById('calendar-month-label').innerText = `${currentYear}年 ${currentMonth}月`;
+            const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = '';
 
-            for (let d = 1; d <= daysInMonth; d++) {
+            // 星期列表
+            const weekdays = ['一', '二', '三', '四', '五', '六', '日'];
+            weekdays.forEach(wd => {
+                const div = document.createElement('div');
+                div.className = 'text-center text-xs font-bold text-gray-400 py-1';
+                div.innerText = wd;
+                grid.appendChild(div);
+            });
+
+            // 計算當月第一天是星期幾 (0 是週日，轉為週一開始：0-6)
+            const firstDayIndex = (new Date(currentYear, currentMonth - 1, 1).getDay() + 6) % 7;
+            const totalDays = new Date(currentYear, currentMonth, 0).getDate();
+
+            // 補齊上個月空白格
+            for (let i = 0; i < firstDayIndex; i++) {
+                const emptyDiv = document.createElement('div');
+                grid.appendChild(emptyDiv);
+            }
+
+            // 填入當月日期
+            for (let d = 1; d <= totalDays; d++) {
                 const btn = document.createElement('button');
-                btn.className = `day-btn aspect-square flex items-center justify-center text-xs rounded-lg border border-gray-200 text-gray-700 hover:bg-blue-50 transition ${d === selectedDay ? 'active' : ''}`;
+                const isSelected = (d === selectedDay && currentMonth === (new Date()).getMonth() + 1 && currentYear === (new Date()).getFullYear()); // 簡化選取比對
+                
+                btn.className = `calendar-day aspect-square flex items-center justify-center text-xs rounded-lg border border-gray-100 text-gray-700 hover:bg-blue-50 transition ${d === selectedDay ? 'active' : 'bg-gray-50'}`;
                 btn.innerText = d;
                 btn.onclick = () => {
                     selectedDay = d;
-                    renderDaySelector(month);
+                    renderCalendar();
                     updateContent();
                 };
-                container.appendChild(btn);
+                grid.appendChild(btn);
             }
         }
 
-        // 讀取當天文字 (.txt) 與 圖片 (.jpg)
+        // 讀取當天文字與圖片（支援 .jpg, .jpeg, .png）
         async function updateContent() {
             const loading = document.getElementById('loading-state');
             const empty = document.getElementById('empty-state');
@@ -159,22 +169,20 @@
             const noImgLabel = document.getElementById('no-img-label');
             const imgContainer = document.getElementById('image-container');
 
-            const year = new Date().getFullYear();
-            const monthStr = selectedMonth.toString().padStart(2, '0');
+            const monthStr = currentMonth.toString().padStart(2, '0');
             const dayStr = selectedDay.toString().padStart(2, '0');
-            const dateKey = `${year}-${monthStr}-${dayStr}`;
+            const dateKey = `${currentYear}-${monthStr}-${dayStr}`;
 
-            document.getElementById('selected-date-label').innerText = `${year}年 ${monthStr}月 ${dayStr}日`;
+            document.getElementById('selected-date-label').innerText = `${currentYear}年 ${monthStr}月 ${dayStr}日`;
 
             loading.classList.remove('hidden');
             empty.classList.add('hidden');
             content.classList.add('hidden');
 
             const txtUrl = `${RAW_BASE_URL}/${dateKey}.txt`;
-            const imgUrl = `${RAW_BASE_URL}/${dateKey}.jpg`;
-
+            
             let hasText = false;
-            let hasImg = false;
+            let imgUrl = '';
 
             // 1. 抓取文字檔
             try {
@@ -186,27 +194,32 @@
                 }
             } catch (e) { hasText = false; }
 
-            // 2. 抓取圖片檔
-            img.src = imgUrl;
-            await new Promise((resolve) => {
-                img.onload = () => { hasImg = true; resolve(); };
-                img.onerror = () => { hasImg = false; resolve(); };
-            });
+            // 2. 自動偵測圖片副檔名 (.jpg, .jpeg, .png)
+            const extensions = ['jpg', 'jpeg', 'png'];
+            for (let ext of extensions) {
+                const testUrl = `${RAW_BASE_URL}/${dateKey}.${ext}`;
+                const exists = await checkImageExists(testUrl);
+                if (exists) {
+                    imgUrl = testUrl;
+                    break;
+                }
+            }
 
             loading.classList.add('hidden');
+
+            const hasImg = imgUrl !== '';
 
             if (!hasText && !hasImg) {
                 empty.classList.remove('hidden');
             } else {
                 content.classList.remove('hidden');
                 
-                // 文字處置
                 if (!hasText) {
                     textContainer.innerText = "（當天未上傳文字紀錄）";
                 }
 
-                // 圖片處置
                 if (hasImg) {
+                    img.src = imgUrl;
                     imgContainer.classList.remove('hidden');
                     noImgLabel.classList.add('hidden');
                 } else {
@@ -214,6 +227,16 @@
                     noImgLabel.classList.remove('hidden');
                 }
             }
+        }
+
+        // 檢查圖片是否存在的小工具
+        function checkImageExists(url) {
+            return new Promise((resolve) => {
+                const testImg = new Image();
+                testImg.onload = () => resolve(true);
+                testImg.onerror = () => resolve(false);
+                testImg.src = url;
+            });
         }
     </script>
 </body>
