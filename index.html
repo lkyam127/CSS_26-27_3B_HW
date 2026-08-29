@@ -55,8 +55,8 @@
         </button>
     </header>
 
-    <!-- Main Content Layout (items-stretch 讓左右高一致) -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+    <!-- Main Content Layout (items-start 確保右邊撐大時不會拉長左邊) -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         <!-- Left 1/3: Calendar Card -->
         <section class="lg:col-span-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col justify-between transition-colors">
@@ -74,20 +74,20 @@
             </div>
         </section>
 
-        <!-- Right 2/3: Content Card (高度與左邊保持一致) -->
-        <section class="lg:col-span-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col justify-center transition-colors">
+        <!-- Right 2/3: Content Card (min-h-full 預設與左邊等高，內容多時自動向下延伸) -->
+        <section class="lg:col-span-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col min-h-full transition-colors">
             
-            <div id="loading-state" class="flex flex-col items-center justify-center py-8">
+            <div id="loading-state" class="flex-1 flex flex-col items-center justify-center py-8">
                 <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                 <p class="text-gray-400 text-sm mt-3">Loading data...</p>
             </div>
 
-            <div id="empty-state" class="hidden flex flex-col items-center justify-center py-8 text-gray-400 dark:text-gray-500">
+            <div id="empty-state" class="hidden flex-1 flex flex-col items-center justify-center py-8 text-gray-400 dark:text-gray-500">
                 <svg class="w-14 h-14 mb-2 stroke-current opacity-40" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                 <p class="text-base font-medium">No record for this date</p>
             </div>
 
-            <div id="content-state" class="hidden h-full grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
+            <div id="content-state" class="hidden flex-1 grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
                 <!-- Text Container (flex-1 向上填滿) -->
                 <div class="md:col-span-2 flex flex-col h-full space-y-3">
                     <h3 class="text-base font-bold text-blue-600 dark:text-blue-400 border-b pb-2 border-gray-100 dark:border-slate-700 flex items-center gap-2">
@@ -246,7 +246,7 @@
                 const res = await fetch(txtUrl);
                 if (res.ok) {
                     textContainer.innerText = await res.text();
-                    textContainer.className = "flex-1 text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-100 dark:border-slate-700 text-gray-700 dark:text-slate-200 block text-left overflow-y-auto";
+                    textContainer.className = "flex-1 text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-100 dark:border-slate-700 text-gray-700 dark:text-slate-200 block text-left";
                     hasText = true;
                 }
             } catch (e) { hasText = false; }
