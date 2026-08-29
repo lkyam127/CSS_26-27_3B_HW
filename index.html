@@ -235,20 +235,20 @@
             }
         }
 
-        /* 強制選單背景變半透明（帶有強烈毛玻璃效果，不遮擋背景） */
+        /* 調整選單：調低不透明度（更透） */
         #theme-menu {
-            background: rgba(255, 255, 255, 0.55) !important;
+            background: rgba(255, 255, 255, 0.35) !important;
             backdrop-filter: blur(25px) saturate(180%) !important;
             -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
-            border: 1.5px solid rgba(255, 255, 255, 0.6) !important;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.5) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08) !important;
         }
 
         @media (prefers-color-scheme: dark) {
             #theme-menu {
-                background: rgba(20, 22, 28, 0.55) !important;
-                border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5) !important;
+                background: rgba(18, 20, 26, 0.35) !important;
+                border: 1px solid rgba(255, 255, 255, 0.08) !important;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
             }
         }
 
