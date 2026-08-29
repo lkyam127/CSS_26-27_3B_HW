@@ -120,6 +120,9 @@
         const GITHUB_REPO = "CSS_26-27_3B_HW_Photos";
         const RAW_BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/images`;
 
+        // 建立前端快取物件
+        const dataCache = {};
+
         let today = new Date();
         let currentYear = today.getFullYear();
         let currentMonth = today.getMonth() + 1;
@@ -213,26 +216,44 @@
 
             document.getElementById('selected-date-label').innerText = `${monthNames[selectedMonth - 1]} ${dayStr}, ${selectedYear}`;
 
-            loading.classList.remove('hidden');
-            empty.classList.add('hidden');
-            content.classList.add('hidden');
+            let textResult = null;
+            let imgUrl = null;
 
-            const txtUrl = `${RAW_BASE_URL}/${dateKey}.txt`;
+            // 檢查快取：若已經載入過，直接取用快取，不跳出 Loading 畫面
+            if (dataCache[dateKey]) {
+                textResult = dataCache[dateKey].text;
+                imgUrl = dataCache[dateKey].img;
+            } else {
+                // 未載入過才顯示 Loading 畫面並發起請求
+                loading.classList.remove('hidden');
+                empty.classList.add('hidden');
+                content.classList.add('hidden');
 
-            // 同時（平行）測試文字與三種圖片格式，大幅提升讀取速度
-            const [textResult, imgUrl] = await Promise.all([
-                fetchText(txtUrl),
-                findValidImage(dateKey)
-            ]);
+                const txtUrl = `${RAW_BASE_URL}/${dateKey}.txt`;
+
+                [textResult, imgUrl] = await Promise.all([
+                    fetchText(txtUrl),
+                    findValidImage(dateKey)
+                ]);
+
+                // 寫入快取
+                dataCache[dateKey] = {
+                    text: textResult,
+                    img: imgUrl
+                };
+            }
 
             loading.classList.add('hidden');
             const hasText = textResult !== null;
             const hasImg = imgUrl !== null;
 
             if (!hasText && !hasImg) {
+                content.classList.add('hidden');
                 empty.classList.remove('hidden');
             } else {
+                empty.classList.add('hidden');
                 content.classList.remove('hidden');
+
                 if (hasText) {
                     textContainer.innerText = textResult;
                     textContainer.className = "flex-1 text-sm leading-relaxed whitespace-pre-line bg-gray-50 dark:bg-slate-900/50 p-4 rounded-xl border border-gray-100 dark:border-slate-700 text-gray-700 dark:text-slate-200 block text-left";
