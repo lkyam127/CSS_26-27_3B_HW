@@ -55,11 +55,11 @@
         </button>
     </header>
 
-    <!-- Main Content Layout (items-start 確保右邊撐大時不會拉長左邊) -->
+    <!-- Main Content Layout (items-start + h-fit 對齊左側) -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         <!-- Left 1/3: Calendar Card -->
-        <section class="lg:col-span-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col justify-between transition-colors">
+        <section id="left-calendar-card" class="lg:col-span-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col justify-between h-fit transition-colors">
             <div>
                 <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-100 dark:border-slate-700">
                     <button onclick="changeMonth(-1)" class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition font-bold">&lt;</button>
@@ -74,8 +74,8 @@
             </div>
         </section>
 
-        <!-- Right 2/3: Content Card (min-h-full 預設與左邊等高，內容多時自動向下延伸) -->
-        <section class="lg:col-span-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col min-h-full transition-colors">
+        <!-- Right 2/3: Content Card -->
+        <section id="right-content-card" class="lg:col-span-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 flex flex-col transition-colors">
             
             <div id="loading-state" class="flex-1 flex flex-col items-center justify-center py-8">
                 <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -88,7 +88,7 @@
             </div>
 
             <div id="content-state" class="hidden flex-1 grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
-                <!-- Text Container (flex-1 向上填滿) -->
+                <!-- Text Container -->
                 <div class="md:col-span-2 flex flex-col h-full space-y-3">
                     <h3 class="text-base font-bold text-blue-600 dark:text-blue-400 border-b pb-2 border-gray-100 dark:border-slate-700 flex items-center gap-2">
                         <svg class="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
@@ -169,7 +169,22 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             updateContent();
+            syncHeight();
+            window.addEventListener('resize', syncHeight);
         });
+
+        function syncHeight() {
+            if (window.innerWidth >= 1024) {
+                const leftCard = document.getElementById('left-calendar-card');
+                const rightCard = document.getElementById('right-content-card');
+                if (leftCard && rightCard) {
+                    rightCard.style.minHeight = `${leftCard.offsetHeight}px`;
+                }
+            } else {
+                const rightCard = document.getElementById('right-content-card');
+                if (rightCard) rightCard.style.minHeight = 'auto';
+            }
+        }
 
         function changeMonth(direction) {
             currentMonth += direction;
@@ -183,6 +198,7 @@
 
             renderCalendar();
             updateContent();
+            setTimeout(syncHeight, 50);
         }
 
         function renderCalendar() {
@@ -277,6 +293,7 @@
                     noImgLabel.classList.remove('hidden');
                 }
             }
+            setTimeout(syncHeight, 50);
         }
 
         function checkImageExists(url) {
