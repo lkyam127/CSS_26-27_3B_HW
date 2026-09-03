@@ -43,4 +43,10 @@ https://www.css2627-3b-hw.link
 The link of this website is public and valid until 01-09-2027, but the pages and files will be kept permanently.
 You are welcomed to request an alternative link.
 
+There are 8 themes you can choose. It’s dark mode friendly all the time.
 
+---
+
+## 🟡 Known issues
+1. Switching frequently between multiple dates with image uploaded may cause lagging.
+2. Limit to conditions, sources of other Chinese class cannot be provided for the time being.
