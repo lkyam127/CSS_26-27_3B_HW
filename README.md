@@ -44,7 +44,7 @@ No data will be collected. Sign-in is not required.
 The link of this website is public and valid until 01-09-2027, but the pages and files will be kept permanently.
 You are welcomed to request an alternative link.
 
-There are 8 themes for you to choose. The website is always dark mode friendly.
+There are 8 themes for you to choose. Always dark mode friendly.
 
 ---
 
