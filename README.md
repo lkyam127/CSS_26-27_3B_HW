@@ -35,7 +35,9 @@
 ---
 
 ## 📖 Introduction
-This website is to record and display the daily homework of class 3B (2026-2027).
-The link of this website is valid until 01-09-2027, but the sources and files will be kept permanently. You are welcomed to request an alternative link.
+### This website is to record and display the daily homework of class 3B (2026-2027).
+
+The link of this website is valid until 01-09-2027, but the sources and files will be kept permanently.
+You are welcomed to request an alternative link.
 
 
