@@ -1,8 +1,7 @@
 <div align="center">
 
   <!-- 專案標題與主視覺 -->
-  <h1>🌟 個人精美作品集網站 (Portfolio)</h1>
-  <p><b>一個現代化、簡潔且完全響應式的個人作品展示平台</b></p>
+  <h1>3B Daily Homework</h1>
 
   <!-- 技術徽章 -->
   <p>
@@ -19,11 +18,11 @@
     <tr>
       <td align="center" width="50%">
         <img src="images/ipad_top.png" width="380" alt="iPad 上半部截圖"><br>
-        <sub><b>📱 iPad 視圖（上半部）</b></sub>
+        <sub><b> iPad Preview (Light Mode) </b></sub>
       </td>
       <td align="center" width="50%">
         <img src="images/iphone_top.png" width="220" alt="iPhone 上半部截圖"><br>
-        <sub><b>📱 iPhone 視圖（上半部）</b></sub>
+        <sub><b> iPhone Preview (Light Mode) </b></sub>
       </td>
     </tr>
     <tr>
