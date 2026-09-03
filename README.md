@@ -1,9 +1,7 @@
 <div align="center">
 
-  <!-- 專案標題與主視覺 -->
   <h1>CSS 26-27 3B Daily Homework</h1>
 
-  <!-- 技術徽章 -->
   <p>
     <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
     <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3">
@@ -13,16 +11,15 @@
 
   <br>
 
-  <!-- 四張截圖排版：左邊 iPad 上下兩張，右邊 iPhone 上下兩張 -->
   <table border="0">
     <tr>
       <td align="center" width="50%">
-        <img src="images/ipad_top.png" width="520" alt="iPad 上半部截圖"><br>
-        <sub><b> iPad Preview (Light Mode) </b></sub>
+        <img src="images/ipad_top.png" width="680" alt="iPad"><br>
+        <sub><b> iPad Preview </b></sub>
       </td>
       <td align="center" width="50%">
-        <img src="images/iphone_top.png" width="220" alt="iPhone 上半部截圖"><br>
-        <sub><b> iPhone Preview (Light Mode) </b></sub>
+        <img src="images/iphone_top.png" width="220" alt="iPhone"><br>
+        <sub><b> iPhone Preview </b></sub>
       </td>
     </tr>
   </table>
