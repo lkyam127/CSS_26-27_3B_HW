@@ -49,4 +49,4 @@ There are 8 themes for you to choose. The website is always dark mode friendly.
 
 ## 🟡 Known issues
 1. Switching frequently between multiple dates with image uploaded on low-performance or low-memory devices may cause lagging.
-2. As conditions limited, sources of other Chinese class cannot be provided for the time being. 
+2. As conditions limited, sources of other CHI classes cannot be provided for the time being. 
