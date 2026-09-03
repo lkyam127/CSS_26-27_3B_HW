@@ -1,4 +1,4 @@
-<div align="center">
+<div align="left">
 
   <h1>CSS 26-27 3B Daily Homework</h1>
 
@@ -18,7 +18,7 @@
         <sub><b> iPad Preview </b></sub>
       </td>
       <td align="center" width="50%">
-        <img src="images/iphone_top.png" width="220" alt="iPhone"><br>
+        <img src="images/iphone_top.png" width="150" alt="iPhone"><br>
         <sub><b> iPhone Preview </b></sub>
       </td>
     </tr>
