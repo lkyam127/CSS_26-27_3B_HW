@@ -14,7 +14,7 @@
   <table border="0">
     <tr>
       <td align="center" width="50%">
-        <img src="images/ipad_top.png" width="900" alt="iPad"><br>
+        <img src="images/ipad_top.png" width="980" alt="iPad"><br>
         <sub><b> iPad Preview </b></sub>
       </td>
       <td align="center" width="50%">
