@@ -14,11 +14,11 @@
   <table border="0">
     <tr>
       <td align="center" width="50%">
-        <img src="images/ipad_top.png" width="980" alt="iPad"><br>
+        <img src="images/ipad_top.png" width="1000" alt="iPad"><br>
         <sub><b> iPad Preview </b></sub>
       </td>
       <td align="center" width="50%">
-        <img src="images/iphone_top.png" width="170" alt="iPhone"><br>
+        <img src="images/iphone_top.png" width="160" alt="iPhone"><br>
         <sub><b> iPhone Preview </b></sub>
       </td>
     </tr>
