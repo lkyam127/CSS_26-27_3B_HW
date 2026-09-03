@@ -36,8 +36,7 @@
 
 ## 📖 Introduction
 This website is to record and display the daily homework of class 3B (2026-2027).
-
-No personal information or private data will be collected. Sign-in not required.
+No data will be collected. Sign-in not required.
 
 https://www.css2627-3b-hw.link
 
