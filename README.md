@@ -41,7 +41,7 @@
 
   <!-- 線上預覽按鈕 (請把網址換成你的 GitHub Pages 網址) -->
   <a href="https://www.css2627-3b-hw.link" target="_blank">
-    <img src="https://img.shields.io/badge/🚀_線上預覽網站-Click_Here-blue?style=for-the-badge" alt="Live Demo">
+    <img src="https://img.shields.io/badge/🚀_Online Preview-Click_Here-blue?style=for-the-badge" alt="Live Demo">
   </a>
 
 </div>
@@ -68,17 +68,3 @@
 | **樣式排版** | CSS3 (Flexbox / Grid) | 視覺美化、排版與響應式切版 |
 | **互動效果** | JavaScript (ES6+) | 網頁動態特效、選單開關等 |
 | **版本控制** | Git / GitHub Pages | 程式碼管理與專案線上部署 |
-
----
-
-## 📂 專案資料夾架構
-```text
-📦 CSS_26-27_3B_HW_Photos
- ┣ 📂 images/          # 存放網站截圖與圖片
- ┃  ┣ 📜 ipad_top.png
- ┃  ┣ 📜 ipad_bottom.png
- ┃  ┣ 📜 iphone_top.png
- ┃  ┗ 📜 iphone_bottom.png
- ┣ 📜 index.html       # 網頁主頁面
- ┣ 📜 CNAME            # 自訂網域設定檔
- ┗ 📜 README.md        # 專案說明文件
