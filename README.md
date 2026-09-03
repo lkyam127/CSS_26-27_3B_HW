@@ -14,7 +14,7 @@
   <table border="0">
     <tr>
       <td align="center" width="50%">
-        <img src="images/ipad_top.png" width="820" alt="iPad"><br>
+        <img src="images/ipad_top.png" width="900" alt="iPad"><br>
         <sub><b> iPad Preview </b></sub>
       </td>
       <td align="center" width="50%">
@@ -35,9 +35,12 @@
 ---
 
 ## 📖 Introduction
-### This website is to record and display the daily homework of class 3B (2026-2027).
+This website is to record and display the daily homework of class 3B (2026-2027).
+No personal information or private data will be collected. Sign-in not required.
 
-The link of this website is valid until 01-09-2027, but the sources and files will be kept permanently.
+https://www.css2627-3b-hw.link
+
+The link of this website is public and valid until 01-09-2027, but the pages and files will be kept permanently.
 You are welcomed to request an alternative link.
 
 
