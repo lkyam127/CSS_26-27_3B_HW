@@ -50,4 +50,5 @@ There are 8 themes for you to choose. Always dark mode friendly.
 
 ## 🟡 Known issues
 1. Switching frequently between multiple dates with image uploaded on low-performance or low-memory devices may cause lagging.
-2. As conditions limited, sources of other CHI classes cannot be provided for the time being. 
+2. HDR images might not be displayed correctly.
+3. As conditions limited, sources of other CHI classes cannot be provided for the time being. 
