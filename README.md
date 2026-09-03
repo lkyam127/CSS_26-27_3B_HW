@@ -17,7 +17,7 @@
   <table border="0">
     <tr>
       <td align="center" width="50%">
-        <img src="images/ipad_top.png" width="380" alt="iPad 上半部截圖"><br>
+        <img src="images/ipad_top.png" width="220" alt="iPad 上半部截圖"><br>
         <sub><b> iPad Preview (Light Mode) </b></sub>
       </td>
       <td align="center" width="50%">
