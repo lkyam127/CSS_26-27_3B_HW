@@ -34,7 +34,8 @@
 
 ---
 
-## 📖 專案介紹
-這是一個專為展示個人作品、技能與經歷所打造的響應式網站。介面設計注重使用者體驗（UX），無論在平板（iPad）或智慧型手機（iPhone）等不同尺寸的螢幕上都能完美呈現。
+## 📖 Introduction
+This website is to record and display the daily homework of class 3B (2026-2027).
+The link of this website is valid until 01-09-2027, but the sources and files will be kept permanently. You are welcomed to request an alternative link.
 
-——-
+
