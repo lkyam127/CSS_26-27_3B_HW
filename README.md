@@ -43,7 +43,7 @@ https://www.css2627-3b-hw.link
 The link of this website is public and valid until 01-09-2027, but the pages and files will be kept permanently.
 You are welcomed to request an alternative link.
 
-There are 8 themes you can choose. The website is dark mode friendly all the time.
+There are 8 themes you can choose. The website is always dark mode friendly.
 
 ---
 
