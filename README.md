@@ -25,21 +25,10 @@
         <sub><b> iPhone Preview (Light Mode) </b></sub>
       </td>
     </tr>
-    <tr>
-      <td align="center">
-        <img src="images/ipad_bottom.png" width="380" alt="iPad 下半部截圖"><br>
-        <sub><b>📱 iPad 視圖（下半部）</b></sub>
-      </td>
-      <td align="center">
-        <img src="images/iphone_bottom.png" width="220" alt="iPhone 下半部截圖"><br>
-        <sub><b>📱 iPhone 視圖（下半部）</b></sub>
-      </td>
-    </tr>
   </table>
 
   <br>
 
-  <!-- 線上預覽按鈕 (請把網址換成你的 GitHub Pages 網址) -->
   <a href="https://www.css2627-3b-hw.link" target="_blank">
     <img src="https://img.shields.io/badge/🚀_Online Preview-Click_Here-blue?style=for-the-badge" alt="Live Demo">
   </a>
@@ -50,3 +39,5 @@
 
 ## 📖 專案介紹
 這是一個專為展示個人作品、技能與經歷所打造的響應式網站。介面設計注重使用者體驗（UX），無論在平板（iPad）或智慧型手機（iPhone）等不同尺寸的螢幕上都能完美呈現。
+
+——-
