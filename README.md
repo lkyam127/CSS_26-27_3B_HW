@@ -18,7 +18,7 @@
         <sub><b> iPad Preview </b></sub>
       </td>
       <td align="center" width="50%">
-        <img src="images/iphone_top.png" width="180" alt="iPhone"><br>
+        <img src="images/iphone_top.png" width="160" alt="iPhone"><br>
         <sub><b> iPhone Preview </b></sub>
       </td>
     </tr>
