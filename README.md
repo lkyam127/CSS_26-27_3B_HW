@@ -1,4 +1,4 @@
-<div align="left">
+<div align="center">
 
   <!-- 專案標題與主視覺 -->
   <h1>CSS 26-27 3B Daily Homework</h1>
