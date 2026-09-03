@@ -1,7 +1,7 @@
-<div align="center">
+<div align="left">
 
   <!-- 專案標題與主視覺 -->
-  <h1>3B Daily Homework</h1>
+  <h1>CSS 26-27 3B Daily Homework</h1>
 
   <!-- 技術徽章 -->
   <p>
