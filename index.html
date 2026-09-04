@@ -372,6 +372,7 @@
 
         const dataCache = {};
         let fileIndex = null;
+        let eventDatesSet = new Set(); // 儲存 event_list.txt 內的日期
 
         let today = new Date();
         let currentYear = today.getFullYear();
@@ -401,8 +402,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
+            await Promise.all([fetchFileIndex(), fetchEventList()]);
             renderCalendar();
-            await fetchFileIndex();
             updateContent();
         });
 
@@ -416,6 +417,25 @@
                 }
             } catch (e) {
                 console.error("Failed to fetch file index", e);
+            }
+        }
+
+        // 新增：讀取 event_list.txt
+        async function fetchEventList() {
+            try {
+                const res = await fetch(`${RAW_BASE_URL}/event_list.txt`);
+                if (res.ok) {
+                    const text = await res.text();
+                    // 假設每一行是一個日期，例如 2026-06-07
+                    text.split(/\r?\n/).forEach(line => {
+                        const trimmed = line.trim();
+                        if (trimmed) {
+                            eventDatesSet.add(trimmed);
+                        }
+                    });
+                }
+            } catch (e) {
+                console.error("Failed to fetch event_list.txt", e);
             }
         }
 
@@ -454,8 +474,22 @@
             for (let d = 1; d <= totalDays; d++) {
                 const btn = document.createElement('button');
                 const isSelected = (d === selectedDay && currentMonth === selectedMonth && currentYear === selectedYear);
-                btn.className = `calendar-day aspect-square flex items-center justify-center text-xs rounded-xl border border-black/5 dark:border-white/5 text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 transition ${isSelected ? 'active' : 'bg-black/5 dark:bg-white/5'}`;
+                
+                // 加上 relative 以便定位紅點
+                btn.className = `calendar-day relative aspect-square flex items-center justify-center text-xs rounded-xl border border-black/5 dark:border-white/5 text-gray-800 dark:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 transition ${isSelected ? 'active' : 'bg-black/5 dark:bg-white/5'}`;
                 btn.innerText = d;
+
+                // 檢查是否在 eventDatesSet 內，若是則加上紅點
+                const monthStr = currentMonth.toString().padStart(2, '0');
+                const dayStr = d.toString().padStart(2, '0');
+                const dateKey = `${currentYear}-${monthStr}-${dayStr}`;
+
+                if (eventDatesSet.has(dateKey)) {
+                    const dot = document.createElement('span');
+                    dot.className = 'absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 rounded-full shadow-sm';
+                    btn.appendChild(dot);
+                }
+
                 btn.onclick = () => {
                     selectedYear = currentYear;
                     selectedMonth = currentMonth;
