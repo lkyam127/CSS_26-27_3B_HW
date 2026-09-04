@@ -366,7 +366,7 @@
 
     <script>
         const GITHUB_USERNAME = "lkyam127";
-        const GITHUB_REPO = "CSS_26-27_3B_HW"; // 已修正為正確的倉庫名稱
+        const GITHUB_REPO = "CSS_26-27_3B_HW";
         const RAW_BASE_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/images`;
         const API_CONTENTS_URL = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/images`;
 
@@ -429,16 +429,20 @@
                     text.split(/\r?\n/).forEach(line => {
                         const trimmed = line.trim();
                         if (trimmed) {
-                            const match = trimmed.match(/^(\d{4}-\d{2}-\d{2})\s*(.*)$/);
-                            if (match) {
-                                const dateKey = match[1];
-                                const desc = match[2];
-                                eventDatesSet.add(dateKey);
-                                if (desc) {
-                                    eventTextsMap[dateKey] = desc;
+                            const firstSpaceIndex = trimmed.search(/\s/);
+                            if (firstSpaceIndex !== -1) {
+                                const dateKey = trimmed.substring(0, firstSpaceIndex);
+                                const desc = trimmed.substring(firstSpaceIndex).trim();
+                                if (/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) {
+                                    eventDatesSet.add(dateKey);
+                                    if (desc) {
+                                        eventTextsMap[dateKey] = desc;
+                                    }
                                 }
                             } else {
-                                eventDatesSet.add(trimmed);
+                                if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+                                    eventDatesSet.add(trimmed);
+                                }
                             }
                         }
                     });
