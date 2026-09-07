@@ -4,6 +4,6 @@ MTH:
 PHY:
 ❶ Bring a folder
 
-CHEM:
+CHM:
 ❶ Assignment 1 (Thursday):
  - Describe the structure of an atom. (>50 words)
