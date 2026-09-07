@@ -5,5 +5,5 @@ PHY:
 ❶ Bring a folder
 
 CHM:
-❶ Assignment 1 (Thursday):
+❶ Assignment 1 (10/9, Thursday):
  - Describe the structure of an atom. (>50 words)
